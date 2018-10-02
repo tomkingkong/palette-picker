@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Jewel Pickr</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="/public/css/styles.css" />
+  </head>
+  <body>
+    <header class="HEADER">
+      <h1 class="TITLE">Jewel Pickr</h1>
+    </header>
+    <main class="PICKER">
+      <section class="BOARD">
+        <div class="RANDOM__PALETTE">
+          <div class="COLOR CIRCLE"></div>
+          <div class="COLOR DIAMOND"></div>
+          <div class="COLOR SQUARE"></div>
+          <div class="COLOR TRIANGLE"></div>
+          <div class="COLOR HEX"></div>
+        </div>
+      </section>
+      <main class="GEN__PALETTE">
+        <section class="CURRENT">
+          <div class="dropdown">
+            <button data-end="▼" onclick="toggleDrop()" class="drop_btn">
+              Projects
+            </button>
+            <div id="project-dropdown" class="dropdown-content">
+              <a href="#project" id="proj1">Project 1</a>
+              <a href="#project" id="proj2">Project 2</a>
+              <a href="#project" id="proj3">Project 3</a>
+            </div>
+          </div>
+          <ul class="PROJECT__PALETTES">
+            <li class="PALETTE">
+              <p>C</p>
+              <p>O</p>
+              <p>L</p>
+              <p>O</p>
+              <p>R</p>
+              <div>T</div>
+            </li>
+            <li class="PALETTE">
+              <p>C</p>
+              <p>O</p>
+              <p>L</p>
+              <p>O</p>
+              <p>R</p>
+              <div>T</div>
+            </li>
+            <li class="PALETTE">
+              <p>C</p>
+              <p>O</p>
+              <p>L</p>
+              <p>O</p>
+              <p>R</p>
+              <div>T</div>
+            </li>
+            <li class="PALETTE">
+              <p>C</p>
+              <p>O</p>
+              <p>L</p>
+              <p>O</p>
+              <p>R</p>
+              <div>T</div>
+            </li>
+          </ul>
+        </section>
+        <div class="GEN__BUTTONS">
+          <div class="GENERATOR">
+            <p>Generate</p>
+            <p>New</p>
+            <p>Jewels</p>
+          </div>
+          <div class="SAVE__PALETTE">
+            <p>SAVE</p>
+          </div>
+        </div>
+      </main>
+    </main>
+    <section class="PROJECTS">
+      <div class="PROJECTS__HEADER">
+          <h4>PROJECTS</h4>
+          <form class="PROJECTS__FORM">
+            <input class="ADD__BTN" type="button" value="+"/>
+            <input class="PROJ__INPUT" type="text" placeholder="Add new project..." />
+          </form>
+      </div>
+      <section class="PROJECTS__CONTAINER">
+        <article class="PROJECT__SAVED">
+          <h5>Project 1</h5>
+          <ul class="PROJECT__PALETTES">
+            <li class="PALETTE">
+                <p>C</p>
+                <p>O</p>
+                <p>L</p>
+                <p>O</p>
+                <p>R</p>
+                <div>T</div>
+              </li>
+          </ul>
+        </article>
+      </section>
+    </section>
+  </body>
+  <script src="/public/js/scripts.js"></script>
+</html>
