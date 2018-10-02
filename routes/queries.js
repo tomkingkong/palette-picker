@@ -34,3 +34,17 @@ function getAllProjects(request, response) {
     });
   }
 };
+
+function getAllColors(request, response) {
+  if (colors) {
+    response.status(200).json({
+      status: 'success',
+      data: colors,
+      message: 'Here\'s all the colors Duke.'
+    });
+  } else {
+    response.status(404).json({
+      error: 'I can\'t believe there aren\'t any colors.'
+    });
+  };
+}
