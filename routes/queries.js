@@ -171,3 +171,14 @@ function deleteProject(request, response) {
     });
   };
 };
+
+module.exports = {
+  addColor,
+  addProject,
+  addPalette,
+  getAllColors,
+  getAllProjects,
+  getProjectPalettes,
+  deletePalette,
+  deleteProject
+};
