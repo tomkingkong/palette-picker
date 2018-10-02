@@ -47,4 +47,21 @@ function getAllColors(request, response) {
       error: 'I can\'t believe there aren\'t any colors.'
     });
   };
-}
+};
+
+function addProject(request, response) {
+  var name = request.body.name.toLowerCase();
+  var projectExists = projects.find(proj => proj.name == name);
+  var newProject = { proj_id: projects.length + 1, palettes: [] };
+  if (!projectExists) {
+    response.status(200).json({
+      status: 'success',
+      data: Object.assign({}, { name }, newProject),
+      message: 'Added new project!'
+    });
+  } else {
+    response.status(400).json({
+      error: 'Project with that name already exists!'
+    });
+  }
+};
