@@ -82,3 +82,24 @@ function addColor(request, response) {
     });
   }
 };
+
+function addPalette(request, response) {
+  var userPalette = JSON.parse(request.body.palette);
+  var user = parseInt(request.params.project_id);
+  var project = projects.find(p => p.proj_id === user);
+  var newPalette = { pal_id: palettes.length + 1 };
+  if (project) {
+    var newPalette = Object.assign({}, { colors: userPalette }, newPalette);
+    palettes.push(newPalette);
+    project.palettes.push(newPalette.pal_id);
+    response.status(200).json({
+      status: 'success',
+      data: newPalette,
+      message: 'Added new palette!'
+    });
+  } else {
+    response.status(404).json({
+      error: 'This project does not exist!'
+    })
+  }
+};
