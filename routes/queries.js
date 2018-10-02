@@ -103,3 +103,27 @@ function addPalette(request, response) {
     })
   }
 };
+
+
+function getProjectPalettes(request, response) {
+  var user = parseInt(request.params.project_id);
+  var project = projects.find(p => p.proj_id === user);
+  if (!project) {
+    response.status(404).json({
+      status: 'failed',
+      message: 'This project doesn\'t exist!'
+    });
+  } else if (project.palettes.length) {
+    var projectPalettes = project.palettes.map(pal => palettes.find(p => p.pal_id === pal));
+    response.status(200).json({
+      status: 'success',
+      data: projectPalettes,
+      message: 'Retreived palettes!'
+    });
+  } else {
+    response.status(404).json({
+      status: 'failed',
+      message: 'This project doesn\'t have any palettes!'
+    });
+  };
+};
