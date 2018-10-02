@@ -20,3 +20,17 @@ var projects = app.locals.projects = [
   { proj_id: 4, palettes: [1], name: 'swag' },
   { proj_id: 5, palettes: [], name: 'blah' },
 ]
+
+function getAllProjects(request, response) {
+  if (projects) {
+    response.status(200).json({
+      status: 'success',
+      data: projects,
+      message: 'Added new color!'
+    });
+  } else {
+    response.status(404).json({
+      error: `Try adding a project first, cause there ain't none.`
+    });
+  }
+};
