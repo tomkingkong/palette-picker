@@ -152,5 +152,22 @@ function deletePalette(request, response) {
       status: 'failed',
       message: 'This user does\'t exist!'
     });
-  }
+  };
+};
+
+function deleteProject(request, response) {
+  var user = parseInt(request.params.project_id);
+  var projectExists = projects.find(proj => proj.proj_id === user);
+  if (projectExists) {
+    projects = projects.filter(proj => proj.proj_id !== user);
+    response.status(200).json({
+      status: 'success',
+      message: 'Project has been removed!'
+    });
+  } else {
+    response.status(404).json({
+      status: 'failed',
+      message: 'This project never existed!'
+    });
+  };
 };
