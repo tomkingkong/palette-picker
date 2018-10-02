@@ -32,7 +32,7 @@ function getAllProjects(request, response) {
     response.status(404).json({
       error: `Try adding a project first, cause there ain't none.`
     });
-  }
+  };
 };
 
 function getAllColors(request, response) {
@@ -63,7 +63,7 @@ function addProject(request, response) {
     response.status(400).json({
       error: 'Project with that name already exists!'
     });
-  }
+  };
 };
 
 function addColor(request, response) {
@@ -80,7 +80,7 @@ function addColor(request, response) {
     response.status(400).json({
       error: 'Color already exists!'
     });
-  }
+  };
 };
 
 function addPalette(request, response) {
@@ -101,7 +101,7 @@ function addPalette(request, response) {
     response.status(404).json({
       error: 'This project does not exist!'
     })
-  }
+  };
 };
 
 
@@ -146,7 +146,7 @@ function deletePalette(request, response) {
         status: 'failed',
         message: 'This palette never existed!'
       });
-    }
+    };
   } else {
     response.status(404).json({
       status: 'failed',
