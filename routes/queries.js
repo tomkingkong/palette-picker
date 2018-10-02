@@ -65,3 +65,20 @@ function addProject(request, response) {
     });
   }
 };
+
+function addColor(request, response) {
+  var color_hex = request.body.color;
+  var colorExists = colors.find(color => color.hex == color_hex);
+  var newColor = { color_id: colors.length + 1 };
+  if (!colorExists) {
+    response.status(200).json({
+      status: 'success',
+      data: Object.assign({}, { hex: color_hex }, newColor),
+      message: 'Added new color!'
+    });
+  } else {
+    response.status(400).json({
+      error: 'Color already exists!'
+    });
+  }
+};
