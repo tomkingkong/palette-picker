@@ -1,5 +1,8 @@
-const toggleDrop = () => {
-  document.getElementById("project-dropdown").classList.toggle("show");
+const dropDown = document.querySelector('.drop_btn');
+const dropContent = document.querySelector('.dropdown-content');
+const GENERATOR = document.querySelector('.GENERATOR');
+const randomPalette = document.querySelector('.RANDOM__PALETTE');
+const colors = document.querySelectorAll('.COLOR');
 }
 
 window.onclick = function(event) {
