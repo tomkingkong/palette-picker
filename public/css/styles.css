@@ -19,14 +19,12 @@ button {
   border: 0.25rem ridge rgba(7, 178, 230, 0.934);
   background: #3e0ba5;
   color: #fff;
-  padding: 1rem 2rem;
+  padding: 1rem;
   width: fit-content;
   margin: 0.5rem; }
 
 /* PICKER BOARD AND CURRENT PROJECT SECTION*/
 .PICKER {
-  order: 2;
-  background: pink;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -35,16 +33,19 @@ button {
 
 /* RANDOM COLOR BOARD */
 .BOARD {
-  order: 1;
+  order: 2;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: paleturquoise;
+  background: #eee;
   border: 0.2rem solid gold;
   border-radius: 0.8rem;
-  min-width: 65%;
-  max-width: 65%;
-  margin: 0.5rem auto; }
+  padding: 1rem;
+  min-width: 8rem;
+  width: 100%;
+  max-width: calc(100% - 10rem);
+  margin: 0.5rem auto;
+  transition: all 0.25s ease-in; }
   .BOARD .RANDOM__PALETTE {
     display: flex;
     justify-content: center;
@@ -52,15 +53,6 @@ button {
     flex-wrap: wrap;
     height: 100%;
     width: 100%; }
-    .BOARD .RANDOM__PALETTE .COLOR {
-      cursor: pointer;
-      background: rgba(86, 177, 130, 0.989);
-      border: 0.1rem solid gainsboro;
-      min-height: 5rem;
-      min-width: 5rem;
-      max-height: 10rem;
-      max-width: 10rem;
-      margin: 0.5rem; }
 
 /* COLOR PICKER */
 .GEN__PALETTE {
@@ -72,7 +64,8 @@ button {
   border-radius: 0.2rem;
   min-width: 4rem;
   width: 10rem;
-  margin: 0.5rem auto; }
+  margin: 0.5rem auto;
+  transition: all 0.25s ease-in; }
 
 /* GENERATOR BUTTONS */
 .GEN__BUTTONS {
@@ -217,6 +210,7 @@ button {
   justify-content: space-between;
   flex-wrap: wrap;
   overflow: scroll;
+  padding: 0 1rem;
   min-height: 4rem;
   min-width: fit-content;
   width: 100%;
@@ -249,17 +243,18 @@ button {
     .PROJECTS__HEADER .PROJECTS__FORM .ADD__BTN:hover {
       background: #6ad76a; }
     .PROJECTS__HEADER .PROJECTS__FORM .ADD__BTN:active {
+      color: gainsboro;
       box-shadow: none; }
     .PROJECTS__HEADER .PROJECTS__FORM .PROJ__INPUT {
       color: #694ba4;
-      border-radius: 0.1rem;
-      box-shadow: inset 0.05rem 0.05rem 0.2rem rgba(42, 46, 52, 0.817);
+      border-radius: 0.2rem;
+      box-shadow: inset 0.08rem 0.08rem 0.4rem rgba(42, 46, 52, 0.517);
       border: none;
       font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
       font-size: 80%;
       padding-left: 0.5rem;
-      outline-color: #7334f0;
-      height: 1.5rem;
+      outline-color: #7334f056;
+      height: 1.65rem;
       min-width: 4rem;
       width: 100%;
       max-width: 8rem; }
@@ -283,3 +278,14 @@ button {
       font-size: 90%;
       padding: 0.2rem;
       text-align: center; }
+
+/* MEDIA QUERIES */
+@media only screen and (max-width: 320px) {
+  .GEN__PALETTE {
+    order: 2;
+    width: 100%; }
+    .GEN__PALETTE .CURRENT {
+      order: 2; }
+  .BOARD {
+    max-width: 100%;
+    margin: 0; } }

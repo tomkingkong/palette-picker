@@ -3,9 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Jewel Pickr</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Jewel Pickr</title>
     <link rel="stylesheet" type="text/css" media="screen" href="/public/css/styles.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/public/css/gems.css" />
   </head>
   <body>
     <header class="HEADER">
@@ -14,17 +15,22 @@
     <main class="PICKER">
       <section class="BOARD">
         <div class="RANDOM__PALETTE">
-          <div class="COLOR CIRCLE"></div>
-          <div class="COLOR DIAMOND"></div>
-          <div class="COLOR SQUARE"></div>
-          <div class="COLOR TRIANGLE"></div>
-          <div class="COLOR HEX"></div>
+          <div class="COLOR"></div>
+          <div class="COLOR"></div>
+          <div class="COLOR"></div>
+          <div class="COLOR"></div>
+          <div class="COLOR"></div>
+          <!-- <div class="HEXAGON GEM"></div>
+          <div class="TRIANGLE GEM"></div>
+          <div class="DIAMOND GEM"></div>
+          <div class="OCTAGON GEM"></div>
+          <div class="CUT_DIAMOND GEM"></div> -->
         </div>
       </section>
       <main class="GEN__PALETTE">
         <section class="CURRENT">
           <div class="dropdown">
-            <button data-end="▼" onclick="toggleDrop()" class="drop_btn">
+            <button data-end="▼" class="drop_btn">
               Projects
             </button>
             <div id="project-dropdown" class="dropdown-content">
@@ -105,5 +111,7 @@
       </section>
     </section>
   </body>
+  <script src="/public/js/api.js"></script>
+  <script src="/public/js/classes.js"></script>
   <script src="/public/js/scripts.js"></script>
 </html>

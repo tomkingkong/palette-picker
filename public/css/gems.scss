@@ -1,0 +1,145 @@
+/* 
+  //Shout out to Joseph Silber, Alexander Futekov, 
+  //From https://css-tricks.com/examples/ShapesOfCSS/
+  //Providing all these lovely shapes
+*/
+
+.COLOR {
+  cursor: pointer;
+  border: 0.2rem solid transparent;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 9.2rem;
+  min-height: 9.2rem;
+  margin: 0.5rem;
+}
+
+/* LOCK */
+
+.locked {
+  border: 0.2rem solid gold;
+  border-radius: 50%;
+  // box-shadow: inset 0rem 0rem 5rem .05rem gold;
+}
+
+// CUT DIAMOND  1
+
+.CUT_DIAMOND {
+  border-style: solid;
+  border-color: transparent transparent azure transparent; // T T CUSTOM T
+  border-width: 0 25px 25px 25px;
+  height: 0;
+  width: 100px;
+  position: relative;
+  margin: 0 0 5rem 0;
+}
+.CUT_DIAMOND:after {
+  content: "";
+  position: absolute;
+  top: 25px;
+  left: -25px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-color: azure transparent transparent transparent; //CUSTOM T T T
+  border-width: 70px 50px 0 50px;
+}
+
+// DIAMOND   2
+
+.DIAMOND {
+	width: 0;
+	height: 0;
+	border: 50px solid transparent;
+	border-bottom-color: paleturquoise; //CUSTOM
+  position: relative;
+  margin: 0.1rem 0.5rem;
+	top: -50px;
+}
+.DIAMOND:after {
+	content: '';
+	position: absolute;
+	left: -50px;
+	top: 50px;
+	width: 0;
+	height: 0;
+	border: 50px solid transparent;
+	border-top-color: paleturquoise; //CUSTOM
+}
+
+// HEXAGON   3
+
+.HEXAGON {
+	width: 100px;
+	height: 55px;
+	background: thistle; //CUSTOM
+	position: relative;
+  margin: 2rem 1rem;
+}
+.HEXAGON:before {
+  content: "";
+  position: absolute;
+  top: -25px;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+  border-bottom: 25px solid thistle; //CUSTOM
+}
+.HEXAGON:after {
+  content: "";
+  position: absolute;
+  bottom: -25px;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+  border-top: 25px solid thistle; //CUSTOM
+}
+
+// TRIANGLE   4
+
+.TRIANGLE {
+	width: 0;
+	height: 0;
+	border-left: 50px solid transparent;
+	border-right: 50px solid transparent;
+  border-bottom: 100px solid indianred; //CUSTOM
+  margin: 1rem;  
+}
+
+// OCTAGON  5
+
+.OCTAGON {
+	width: 100px;
+	height: 100px;
+	background: palegreen; //CUSTOM
+  position: relative;
+  margin: 1rem;  
+}
+.OCTAGON:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-bottom: 29px solid palegreen; //CUSTOM
+  border-left: 30px solid #eee; //make background color
+  border-right: 29px solid #eee; //make background color
+  width: 42px;
+  height: 0;
+}
+.OCTAGON:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  border-top: 29px solid palegreen; //CUSTOM
+  border-left: 30px solid #eee; //make background color
+  border-right: 29px solid #eee; //make background color
+  width: 42px;
+  height: 0;
+}
