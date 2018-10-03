@@ -4,11 +4,18 @@ const GENERATOR = document.querySelector('.GENERATOR');
 const randomPalette = document.querySelector('.RANDOM__PALETTE');
 const colors = document.querySelectorAll('.COLOR');
 dropDown.addEventListener('click', toggleDrop);
+dropContent.addEventListener('click', selectProject);
 }
 
 function toggleDrop() {
   document.getElementById('project-dropdown').classList.toggle('show');
 }
+
+function selectProject(e) {
+  const selectedProject = e.target.innerText;
+  dropDown.innerText = selectedProject;
+}
+
 window.onclick = function(event) {
   if (!event.target.matches('.drop_btn')) {
 
