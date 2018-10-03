@@ -5,6 +5,15 @@ const randomPalette = document.querySelector('.RANDOM__PALETTE');
 const colors = document.querySelectorAll('.COLOR');
 dropDown.addEventListener('click', toggleDrop);
 dropContent.addEventListener('click', selectProject);
+randomPalette.addEventListener('click', lockColor);
+
+function lockColor(e) {
+  const { className, classList, parentNode } = e.target;
+  if(className.includes('COLOR')) {
+   classList.toggle('locked');
+  } else if(parentNode.className.includes('COLOR')) {
+    parentNode.classList.toggle('locked');
+  }
 }
 
 function toggleDrop() {
