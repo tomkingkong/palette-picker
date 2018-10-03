@@ -19,3 +19,13 @@ class Gem {
     return shapes[(Math.random()*shapes.length-1)+0.5<<0];
   }
 }
+
+const addGemRules = ((style) => {
+  const sheet = document.head.appendChild(style).sheet;
+  return (selector, css) => {
+    const propText = Object.keys(css)
+    .map(prop => prop+':'+css[prop])
+    .join(';');
+    sheet.insertRule(`${selector}{ ${propText} }`, sheet.cssRules.length);
+  }
+})(document.createElement("style"));
