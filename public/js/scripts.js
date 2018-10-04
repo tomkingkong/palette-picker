@@ -12,6 +12,14 @@ dropDown.addEventListener('click', toggleDrop);
 dropContent.addEventListener('click', selectProject);
 randomPalette.addEventListener('click', lockColor);
 savePaletteBtn.addEventListener('click', saveColorPalette);
+async function populateProjects() {
+  const projects = await getAllProjects();
+  const { data, status } = projects;
+  if (status === 'success') {
+    data.forEach(proj => spawnProject(proj))
+  }
+}
+
 function spawnProject(project) {
   const savedProject = (
     `<article id="${project.id}" class="PROJECT__SAVED">
