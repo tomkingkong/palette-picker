@@ -65,18 +65,18 @@ function generatePalette() {
   });
 }
 
-async function saveColorPalette() {
+function saveColorPalette() {
   const proj_id = parseInt(dropDown.id);
-  const palette = {
-    name: 'test'
-  };
+  const name = paletteInput.value;
+  if (!name) return;
+  const palette = { name };
   
   colors.forEach( async (color, i) => {
     const { className, id } = color.childNodes[0];
     const shape = className.split(' ')[1];
     const hex = id;
     let c = await addColor(shape, hex);
-    palette[`color${i+1}`] = await c.id;
+    palette[`color${i+1}`] = c.id;
   });
   setTimeout(() => { addPalette(proj_id, palette) }, 1000) 
 }
