@@ -6,14 +6,51 @@ const colors = document.querySelectorAll('.COLOR');
 const savePaletteBtn = document.querySelector('.SAVE__PALETTE');
 const saveProjectForm = document.querySelector('.PROJECTS__FORM');
 const projectInput = document.querySelector('.PROJ__INPUT');
+const paletteInput = document.querySelector('.PALETTE__INPUT');
+const savedProjects = document.querySelector('.PROJECTS__CONTAINER');
 
-window.addEventListener('load', generatePalette);
+window.addEventListener('load', function() {
+  generatePalette();
+  populateProjects();
+});
+
 dropDown.addEventListener('click', toggleDrop);
 dropContent.addEventListener('click', selectProject);
-randomPalette.addEventListener('click', lockColor);
-savePaletteBtn.addEventListener('click', saveColorPalette);
-paletteGenerator.addEventListener('click', generatePalette);
 saveProjectForm.addEventListener('submit', saveProject);
+randomPalette.addEventListener('click', lockColor);
+paletteGenerator.addEventListener('click', generatePalette);
+savePaletteBtn.addEventListener('click', saveColorPalette);
+
+async function populateProjects() {
+  const projects = await getAllProjects();
+  const { data, status } = projects;
+  if (status === 'success') {
+    data.forEach(proj => spawnProject(proj))
+  }
+}
+
+function spawnProject(project) {
+  const savedProject = (
+    `<article id="${project.id}" class="PROJECT__SAVED">
+      <h5>${project.name}</h5>
+      <div class="PROJECT__PALETTES">
+        <section class="PALETTE">
+          <div class="CUT_DIAMOND saved"></div>
+          <div class="HEXAGON saved"></div>
+          <div class="DIAMOND saved"></div>
+          <div class="OCTAGON saved"></div>
+          <div class="TRIANGLE saved"></div>
+        </section>
+        <div class="trash">🗑</div>
+      </div>
+    </article>`
+  )
+  savedProjects.innerHTML += savedProject;
+}
+
+function spawnPalette(id) {
+
+}
 
 function selectProject(e) {
   const { innerText, id } = e.target;
@@ -40,18 +77,18 @@ function generatePalette() {
   });
 }
 
-async function saveColorPalette() {
+function saveColorPalette() {
   const proj_id = parseInt(dropDown.id);
-  const palette = {
-    name: 'test'
-  };
-  
+  const name = paletteInput.value;
+  if (!name) return;
+  const palette = { name };
+
   colors.forEach( async (color, i) => {
     const { className, id } = color.childNodes[0];
     const shape = className.split(' ')[1];
     const hex = id;
     let c = await addColor(shape, hex);
-    palette[`color${i+1}`] = await c.id;
+    palette[`color${i+1}`] = c.id;
   });
   setTimeout(() => { addPalette(proj_id, palette) }, 1000) 
 }

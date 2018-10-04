@@ -218,20 +218,13 @@ button {
   color: antiquewhite;
   background: darkcyan;
   border: none;
-  border-radius: 0.2rem;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   font-size: 90%;
   text-align: center;
-  width: 75%;
   margin: 0.5rem auto;
-  p {
-    padding: 0;
-    margin: 0;
-  }
   div {
     cursor: pointer;
     align-self: flex-end;
-    // background: #3e178b;
   }
 }
 
@@ -306,26 +299,34 @@ button {
 }
 
 /* SAVED PROJECTS */
+
 .PROJECTS__CONTAINER {
   border: 0.2rem solid forestgreen;
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
   margin: 0.5rem 0 0 0;
-  .PROJECT__SAVED {
-    height: auto;
-    width: 6rem;
-    margin: 0.5rem;
-    h5 {
-      background: floralwhite;
-      border-radius: 0.2rem;
-      box-shadow: 0rem 0.1rem 0.5rem paleturquoise;
-      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-      font-size: 90%;
-      padding: 0.2rem;
-      text-align: center;
-    }
+}
+
+.PROJECT__SAVED {
+  height: auto;
+  width: 6rem;
+  margin: 0.5rem;
+  h5 {
+    background: floralwhite;
+    border-radius: 0.2rem;
+    box-shadow: 0rem 0.1rem 0.5rem paleturquoise;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 90%;
+    padding: 0.2rem;
+    text-align: center;
   }
+}
+
+/* SAVED PALETTES */
+
+.saved {
+  transform: scale(0.5);
 }
 
 /* MEDIA QUERIES */
