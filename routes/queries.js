@@ -3,18 +3,18 @@ const configuration = require('../knexfile')[environment];
 const database = require('knex')(configuration);
 
 function getAllProjects(request, response) {
-  if (projects) {
+  database('projects').select()
+    .then(projects => {
     response.status(200).json({
       status: 'success',
       data: projects,
-      message: 'Added new color!'
+        message: 'Here are all the projects!'
     });
-  } else {
-    response.status(404).json({
-      error: `Try adding a project first, cause there ain't none.`
-    });
+    })
+    .catch(error => {
+      response.status(500).json({ error });
+    })
   };
-};
 
 function getAllColors(request, response) {
   if (colors) {
