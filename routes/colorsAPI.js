@@ -7,7 +7,7 @@ router.get('/api/v1/:project_id/palettes', colors.getProjectPalettes);
 router.post('/api/v1/colors', colors.addColor);
 router.post('/api/v1/projects', colors.addProject);
 router.post('/api/v1/:project_id/palettes', colors.addPalette);
-router.delete('/api/v1/:project_id/palettes/:palette_id', colors.deletePalette);
-router.delete('/api/v1/:project_id', colors.deleteProject);
+router.delete('/api/v1/palettes/:palette_id', colors.deletePalette);
+router.delete('/api/v1/projects/:project_id', colors.deleteProject);
 
 module.exports = router;
