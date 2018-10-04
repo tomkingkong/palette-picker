@@ -63,21 +63,22 @@ function addProject(request, response) {
   };
 
 function addColor(request, response) {
-  var color_hex = request.body.color;
-  var colorExists = colors.find(color => color.hex == color_hex);
-  var newColor = { color_id: colors.length + 1 };
-  if (!colorExists) {
-    response.status(200).json({
-      status: 'success',
-      data: Object.assign({}, { hex: color_hex }, newColor),
-      message: 'Added new color!'
-    });
-  } else {
-    response.status(400).json({
-      error: 'Color already exists!'
-    });
-  };
-};
+  const color = request.body;
+
+  for (let requiredParemeter of ['hex', 'shape']) {
+    if (!color[requiredParemeter]) {
+      return response.status(422).send({ 
+        error: `Expected format: { hex: <String>, shape: <String> }. You're missing a "${requiredParemeter}" property.`
+      })
+    }
+  }
+
+  database('colors').insert(color, 'id')
+    .then(color => {
+      response.status(201).json({ id: color[0] })
+    })
+    .catch(error => response.status(500).json({ error }))
+}
 
 function addPalette(request, response) {
   var userPalette = JSON.parse(request.body.palette);
