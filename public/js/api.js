@@ -1,5 +1,5 @@
 const fetchCurry = (...paths) => (options, method, body) => {
-  const url = 'http://localhost:3000' + paths.join('');
+  const url = 'https://localhost:3000' + paths.join('');
   const load = options || {
     method,
     body: JSON.stringify(body),
