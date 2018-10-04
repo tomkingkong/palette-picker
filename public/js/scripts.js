@@ -1,6 +1,6 @@
 const dropDown = document.querySelector('.drop_btn');
 const dropContent = document.querySelector('.dropdown-content');
-const GENERATOR = document.querySelector('.GENERATOR');
+const paletteGenerator = document.querySelector('.GENERATOR');
 const randomPalette = document.querySelector('.RANDOM__PALETTE');
 const colors = document.querySelectorAll('.COLOR');
 
@@ -8,6 +8,7 @@ window.addEventListener('load', generatePalette);
 dropDown.addEventListener('click', toggleDrop);
 dropContent.addEventListener('click', selectProject);
 randomPalette.addEventListener('click', lockColor);
+paletteGenerator.addEventListener('click', generatePalette);
 
 function generatePalette() {
   colors.forEach((color, i) => {
