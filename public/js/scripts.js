@@ -12,8 +12,25 @@ dropDown.addEventListener('click', toggleDrop);
 dropContent.addEventListener('click', selectProject);
 randomPalette.addEventListener('click', lockColor);
 savePaletteBtn.addEventListener('click', saveColorPalette);
-paletteGenerator.addEventListener('click', generatePalette);
-saveProjectForm.addEventListener('submit', saveProject);
+function spawnProject(project) {
+  const savedProject = (
+    `<article id="${project.id}" class="PROJECT__SAVED">
+      <h5>${project.name}</h5>
+      <div class="PROJECT__PALETTES">
+        <section class="PALETTE">
+          <div class="CUT_DIAMOND saved"></div>
+          <div class="HEXAGON saved"></div>
+          <div class="DIAMOND saved"></div>
+          <div class="OCTAGON saved"></div>
+          <div class="TRIANGLE saved"></div>
+        </section>
+        <div class="trash">🗑</div>
+      </div>
+    </article>`
+  )
+  savedProjects.innerHTML += savedProject;
+}
+
 
 function selectProject(e) {
   const { innerText, id } = e.target;
