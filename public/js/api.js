@@ -1,5 +1,5 @@
 const fetchCurry = (...paths) => (options, method, body) => {
-  const url = 'https://localhost:3000' + paths.join('');
+  const url = `/api/v1` + paths.join('');
   const load = options || {
     method,
     body: JSON.stringify(body),
@@ -11,12 +11,12 @@ const fetchCurry = (...paths) => (options, method, body) => {
     .catch(error => console.log(error));
 }
 
-const getAllProjects = () => fetchCurry('/api/v1/projects')({});
-const getProjectPalettes = (projectId) => fetchCurry(`/api/v1/${projectId}/palettes`)({});
+const getAllProjects = () => fetchCurry('/projects')({});
+const getProjectPalettes = (projectId) => fetchCurry(`/${projectId}/palettes`)({});
 
-const addColor = (shape, hex) => fetchCurry(`/api/v1/colors`)(false, 'POST', {shape, hex});
-const addProject = (name) => fetchCurry(`/api/v1/projects`)(false, 'POST', {name});
-const addPalette = (projectId, palette) => fetchCurry(`/api/v1/${projectId}/palettes`)(false, 'POST', {...palette});
+const addColor = (shape, hex) => fetchCurry(`/colors`)(false, 'POST', {shape, hex});
+const addProject = (name) => fetchCurry(`/projects`)(false, 'POST', {name});
+const addPalette = (projectId, palette) => fetchCurry(`/${projectId}/palettes`)(false, 'POST', {...palette});
 
-const deletePalette = (paletteId) => fetchCurry(`/api/v1/palettes/${paletteId}`)(false, 'DELETE');
-const deleteProject = (projectId) => fetchCurry(`/api/v1/projects/${projectId}`)(false, 'DELETE');
+const deletePalette = (paletteId) => fetchCurry(`/palettes/${paletteId}`)(false, 'DELETE');
+const deleteProject = (projectId) => fetchCurry(`/projects/${projectId}`)(false, 'DELETE');
