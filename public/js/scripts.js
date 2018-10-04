@@ -4,6 +4,7 @@ const paletteGenerator = document.querySelector('.GENERATOR');
 const randomPalette = document.querySelector('.RANDOM__PALETTE');
 const colors = document.querySelectorAll('.COLOR');
 const savePaletteBtn = document.querySelector('.SAVE__PALETTE');
+const saveProjectForm = document.querySelector('.PROJECTS__FORM');
 
 window.addEventListener('load', generatePalette);
 dropDown.addEventListener('click', toggleDrop);
@@ -11,6 +12,13 @@ dropContent.addEventListener('click', selectProject);
 randomPalette.addEventListener('click', lockColor);
 savePaletteBtn.addEventListener('click', saveColorPalette);
 paletteGenerator.addEventListener('click', generatePalette);
+saveProjectForm.addEventListener('submit', saveProject);
+
+function saveProject() {
+  let name = projectInput.value;
+  if (name !== '') addProject(name);
+  projectInput.value = '';
+}
 
 function generatePalette() {
   colors.forEach((color, i) => {
