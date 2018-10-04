@@ -5,6 +5,7 @@ const randomPalette = document.querySelector('.RANDOM__PALETTE');
 const colors = document.querySelectorAll('.COLOR');
 const savePaletteBtn = document.querySelector('.SAVE__PALETTE');
 const saveProjectForm = document.querySelector('.PROJECTS__FORM');
+const projectInput = document.querySelector('.PROJ__INPUT');
 
 window.addEventListener('load', generatePalette);
 dropDown.addEventListener('click', toggleDrop);
@@ -13,6 +14,13 @@ randomPalette.addEventListener('click', lockColor);
 savePaletteBtn.addEventListener('click', saveColorPalette);
 paletteGenerator.addEventListener('click', generatePalette);
 saveProjectForm.addEventListener('submit', saveProject);
+
+function selectProject(e) {
+  const { innerText, id } = e.target;
+  dropDown.innerText = innerText;
+  dropDown.id = id;
+  getProjectPalettes(id);
+}
 
 function saveProject() {
   let name = projectInput.value;
@@ -30,7 +38,7 @@ function generatePalette() {
       color.innerHTML = `<div id="${gem.color}" class="${gem.shape+i} ${gem.shape}" />`;
     }
   });
-    }
+}
 
 async function saveColorPalette() {
   const proj_id = parseInt(dropDown.id);
@@ -61,14 +69,8 @@ function toggleDrop() {
   document.getElementById('project-dropdown').classList.toggle('show');
 }
 
-function selectProject(e) {
-  const selectedProject = e.target.innerText;
-  dropDown.innerText = selectedProject;
-}
-
 window.onclick = function(event) {
   if (!event.target.matches('.drop_btn')) {
-
     const dropdowns = document.getElementsByClassName('dropdown-content');
     for (let i = 0; i < dropdowns.length; i++) {
       let openDropdown = dropdowns[i];
