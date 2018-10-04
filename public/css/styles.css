@@ -130,7 +130,8 @@ button {
 
 .drop_btn::after {
   content: attr(data-end);
-  font-size: 80%; }
+  font-size: 80%;
+  margin: 0 0 0 0.5rem; }
 
 .drop_btn:hover,
 .drop_btn:focus {
@@ -196,8 +197,7 @@ button {
     margin: 0; }
   .PALETTE div {
     cursor: pointer;
-    align-self: flex-end;
-    background: #3e178b; }
+    align-self: flex-end; }
 
 /* PROJECTS SECTION */
 .PROJECTS {
