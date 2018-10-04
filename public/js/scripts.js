@@ -6,12 +6,21 @@ const colors = document.querySelectorAll('.COLOR');
 const savePaletteBtn = document.querySelector('.SAVE__PALETTE');
 const saveProjectForm = document.querySelector('.PROJECTS__FORM');
 const projectInput = document.querySelector('.PROJ__INPUT');
+const paletteInput = document.querySelector('.PALETTE__INPUT');
+const savedProjects = document.querySelector('.PROJECTS__CONTAINER');
 
-window.addEventListener('load', generatePalette);
+window.addEventListener('load', function() {
+  generatePalette();
+  populateProjects();
+});
+
 dropDown.addEventListener('click', toggleDrop);
 dropContent.addEventListener('click', selectProject);
+saveProjectForm.addEventListener('submit', saveProject);
 randomPalette.addEventListener('click', lockColor);
+paletteGenerator.addEventListener('click', generatePalette);
 savePaletteBtn.addEventListener('click', saveColorPalette);
+
 async function populateProjects() {
   const projects = await getAllProjects();
   const { data, status } = projects;
@@ -39,6 +48,9 @@ function spawnProject(project) {
   savedProjects.innerHTML += savedProject;
 }
 
+function spawnPalette(id) {
+
+}
 
 function selectProject(e) {
   const { innerText, id } = e.target;
@@ -70,7 +82,7 @@ function saveColorPalette() {
   const name = paletteInput.value;
   if (!name) return;
   const palette = { name };
-  
+
   colors.forEach( async (color, i) => {
     const { className, id } = color.childNodes[0];
     const shape = className.split(' ')[1];
