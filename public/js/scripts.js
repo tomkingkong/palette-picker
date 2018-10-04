@@ -4,9 +4,7 @@ const GENERATOR = document.querySelector('.GENERATOR');
 const randomPalette = document.querySelector('.RANDOM__PALETTE');
 const colors = document.querySelectorAll('.COLOR');
 
-GENERATOR.addEventListener('click', function() {
-  generatePalette();
-});
+window.addEventListener('load', generatePalette);
 dropDown.addEventListener('click', toggleDrop);
 dropContent.addEventListener('click', selectProject);
 randomPalette.addEventListener('click', lockColor);
@@ -14,11 +12,13 @@ randomPalette.addEventListener('click', lockColor);
 function generatePalette() {
   colors.forEach((color, i) => {
     if (color.className.includes('locked')) {
-      return 
+      return;
     } else {
       const gem = new Gem();
       generateGemClasses(`${gem.shape}`,`${gem.shape+i}`, gem.color);
-      color.innerHTML = `<div class="${gem.shape+i} ${gem.shape}" />`;
+      color.innerHTML = `<div id="${gem.color}" class="${gem.shape+i} ${gem.shape}" />`;
+    }
+  });
     }
   })
 }
