@@ -16,19 +16,33 @@ function getAllProjects(request, response) {
     })
   };
 
-function getAllColors(request, response) {
-  if (colors) {
+function getProjectPalettes(request, response) {
+  database('projects').where('id', request.params.project_id).select()
+    .then(project => {
+      if (project.length) {
+        database('palettes').where('proj_id', request.params.project_id).select()
+          .then(palettes => {
     response.status(200).json({
       status: 'success',
-      data: colors,
-      message: 'Here\'s all the colors Duke.'
-    });
-  } else {
+              data: palettes,
+              message: 'Here are all the palettes!'
+            })
+          })
+          .catch(() => {
     response.status(404).json({
-      error: 'I can\'t believe there aren\'t any colors.'
-    });
+              error: `Ain't no palettes here.`
+            })
+          })
+      }
+    })
+    .catch(error => {
+      response.status(404).json({
+        status: 'failed',
+        error,
+        message: `This project doesn't exist!`
+      })
+    })
   };
-};
 
 function addProject(request, response) {
   var name = request.body.name.toLowerCase();
