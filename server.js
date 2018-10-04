@@ -21,5 +21,3 @@ app.use('/', colors);
 app.listen(app.get('port'), () => {
   console.log(`Hey, Listen! Running on http://localhost:${app.get('port')}`)
 });
-
-console.log(`Listening at http://localhost:${port}`);
