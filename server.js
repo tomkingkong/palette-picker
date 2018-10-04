@@ -3,9 +3,9 @@ const app = express();
 const bodyParser = require('body-parser');
 const cors = require('express-cors');
 app.set('port', process.env.PORT || 3000);
-
 const colors = require('./routes/colorsAPI');
 
+app.use(express.static('public'));
 app.use(cors());
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
