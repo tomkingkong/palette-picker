@@ -81,48 +81,39 @@ function addColor(request, response) {
 }
 
 function addPalette(request, response) {
-  var userPalette = JSON.parse(request.body.palette);
-  var user = parseInt(request.params.project_id);
-  var project = projects.find(p => p.proj_id === user);
-  var newPalette = { pal_id: palettes.length + 1 };
-  if (project) {
-    var newPalette = Object.assign({}, { colors: userPalette }, newPalette);
-    palettes.push(newPalette);
-    project.palettes.push(newPalette.pal_id);
-    response.status(200).json({
-      status: 'success',
-      data: newPalette,
-      message: 'Added new palette!'
-    });
-  } else {
-    response.status(404).json({
-      error: 'This project does not exist!'
+  const palette = request.body;
+
+  for (let requiredParemeter of [
+    'color1', 
+    'color2', 
+    'color3', 
+    'color4', 
+    'color5', 
+    'name'
+  ]) {
+    if (!palette[requiredParemeter]) {
+      return response.status(422).send({ 
+        error: `You're missing a "${requiredParemeter}" property.`,
+        palette
     })
-  };
-};
+    }
+  }
 
-
-function getProjectPalettes(request, response) {
-  var user = parseInt(request.params.project_id);
-  var project = projects.find(p => p.proj_id === user);
-  if (!project) {
-    response.status(404).json({
-      status: 'failed',
-      message: 'This project doesn\'t exist!'
-    });
-  } else if (project.palettes.length) {
-    var projectPalettes = project.palettes.map(pal => palettes.find(p => p.pal_id === pal));
-    response.status(200).json({
-      status: 'success',
-      data: projectPalettes,
-      message: 'Retreived palettes!'
-    });
+  database('projects').where('id', request.params.project_id).select()
+    .then(projects => {
+      if (projects.length) {
+        database('palettes').insert({...palette, proj_id: request.params.project_id}, 'id')
+          .then(palette => response.status(201).json({ id: palette[0] }))
+          .catch(error => response.status(500).json({ error }))
   } else {
     response.status(404).json({
-      status: 'failed',
-      message: 'This project doesn\'t have any palettes!'
-    });
-  };
+          error: `Could not find project with id ${request.params.project_id}`
+        })
+      }
+    })
+    .catch(error => {
+      response.status(500).json('adding palette didnt work');
+    })
 };
 
 function deletePalette(request, response) {
