@@ -45,21 +45,22 @@ function getProjectPalettes(request, response) {
   };
 
 function addProject(request, response) {
-  var name = request.body.name.toLowerCase();
-  var projectExists = projects.find(proj => proj.name == name);
-  var newProject = { proj_id: projects.length + 1, palettes: [] };
-  if (!projectExists) {
-    response.status(200).json({
-      status: 'success',
-      data: Object.assign({}, { name }, newProject),
-      message: 'Added new project!'
-    });
-  } else {
-    response.status(400).json({
-      error: 'Project with that name already exists!'
-    });
+  const project = request.body;
+
+  for (let requiredParemeter of ['name']) {
+    if(!project[requiredParemeter]) {
+      return response.status(422).send({ 
+        error: `Expected format: { name: <String> }. You're missing a "${requiredParemeter}" property.`
+      })
+    }
+  }
+
+  database('projects').insert(project, 'id')
+    .then(project => {
+      response.status(201).json({ id: project[0] })
+    })
+    .catch(error => response.status(500).json({ error }))
   };
-};
 
 function addColor(request, response) {
   var color_hex = request.body.color;
