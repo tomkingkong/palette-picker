@@ -154,6 +154,7 @@ button {
 .drop_btn::after {
   content: attr(data-end);
   font-size: 80%;
+  margin: 0 0 0 0.5rem;
 }
 
 .drop_btn:hover, 
@@ -230,7 +231,7 @@ button {
   div {
     cursor: pointer;
     align-self: flex-end;
-    background: #3e178b;
+    // background: #3e178b;
   }
 }
 

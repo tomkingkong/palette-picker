@@ -1,9 +1,9 @@
-var express = require('express');
-var cors = require('express-cors');
-var port = process.env.PORT || 3000;
-var app = express();
-var bodyParser = require('body-parser');
-var colors = require('./routes/colorsAPI');
+const express = require('express');
+const app = express();
+const cors = require('express-cors');
+const port = process.env.PORT || 3000;
+const bodyParser = require('body-parser');
+const colors = require('./routes/colorsAPI');
 
 app.use(cors());
 app.use(function(req, res, next) {

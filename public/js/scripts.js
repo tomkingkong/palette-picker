@@ -1,26 +1,59 @@
 const dropDown = document.querySelector('.drop_btn');
 const dropContent = document.querySelector('.dropdown-content');
-const GENERATOR = document.querySelector('.GENERATOR');
+const paletteGenerator = document.querySelector('.GENERATOR');
 const randomPalette = document.querySelector('.RANDOM__PALETTE');
 const colors = document.querySelectorAll('.COLOR');
+const savePaletteBtn = document.querySelector('.SAVE__PALETTE');
+const saveProjectForm = document.querySelector('.PROJECTS__FORM');
+const projectInput = document.querySelector('.PROJ__INPUT');
 
-GENERATOR.addEventListener('click', function() {
-  generatePalette();
-});
+window.addEventListener('load', generatePalette);
 dropDown.addEventListener('click', toggleDrop);
 dropContent.addEventListener('click', selectProject);
 randomPalette.addEventListener('click', lockColor);
+savePaletteBtn.addEventListener('click', saveColorPalette);
+paletteGenerator.addEventListener('click', generatePalette);
+saveProjectForm.addEventListener('submit', saveProject);
+
+function selectProject(e) {
+  const { innerText, id } = e.target;
+  dropDown.innerText = innerText;
+  dropDown.id = id;
+  getProjectPalettes(id);
+}
+
+function saveProject() {
+  let name = projectInput.value;
+  if (name !== '') addProject(name);
+  projectInput.value = '';
+}
 
 function generatePalette() {
   colors.forEach((color, i) => {
     if (color.className.includes('locked')) {
-      return 
+      return;
     } else {
       const gem = new Gem();
       generateGemClasses(`${gem.shape}`,`${gem.shape+i}`, gem.color);
-      color.innerHTML = `<div class="${gem.shape+i} ${gem.shape}" />`;
+      color.innerHTML = `<div id="${gem.color}" class="${gem.shape+i} ${gem.shape}" />`;
     }
-  })
+  });
+}
+
+async function saveColorPalette() {
+  const proj_id = parseInt(dropDown.id);
+  const palette = {
+    name: 'test'
+  };
+  
+  colors.forEach( async (color, i) => {
+    const { className, id } = color.childNodes[0];
+    const shape = className.split(' ')[1];
+    const hex = id;
+    let c = await addColor(shape, hex);
+    palette[`color${i+1}`] = await c.id;
+  });
+  setTimeout(() => { addPalette(proj_id, palette) }, 1000) 
 }
 
 function lockColor(e) {
@@ -36,14 +69,8 @@ function toggleDrop() {
   document.getElementById('project-dropdown').classList.toggle('show');
 }
 
-function selectProject(e) {
-  const selectedProject = e.target.innerText;
-  dropDown.innerText = selectedProject;
-}
-
 window.onclick = function(event) {
   if (!event.target.matches('.drop_btn')) {
-
     const dropdowns = document.getElementsByClassName('dropdown-content');
     for (let i = 0; i < dropdowns.length; i++) {
       let openDropdown = dropdowns[i];

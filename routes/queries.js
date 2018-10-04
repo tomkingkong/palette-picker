@@ -1,131 +1,119 @@
-var express = require('express');
-var app = express();
-
-var colors = app.locals.colors = [
-  { color_id: 1, hex: '#000fff' },
-  { color_id: 2, hex: '#123fff' },
-  { color_id: 3, hex: '#456ccc' },
-  { color_id: 4, hex: '#555bbb' },
-  { color_id: 5, hex: '#222aaa' },
-]
-var palettes = app.locals.palettes = [
-  { pal_id: 1, colors: [1, 2, 3, 4, 5] },
-  { pal_id: 2, colors: [1, 4, 2, 3, 5] },
-  { pal_id: 3, colors: [4, 1, 3, 2, 5] },
-]
-var projects = app.locals.projects = [
-  { proj_id: 1, palettes: [1, 3], name: 'cool' },
-  { proj_id: 2, palettes: [2, 3], name: 'beans' },
-  { proj_id: 3, palettes: [3], name: 'dawg' },
-  { proj_id: 4, palettes: [1], name: 'swag' },
-  { proj_id: 5, palettes: [], name: 'blah' },
-]
+const environment = process.env.NODE_ENV || 'development';
+const configuration = require('../knexfile')[environment];
+const database = require('knex')(configuration);
 
 function getAllProjects(request, response) {
-  if (projects) {
+  database('projects').select()
+    .then(projects => {
     response.status(200).json({
       status: 'success',
       data: projects,
-      message: 'Added new color!'
+        message: 'Here are all the projects!'
     });
-  } else {
-    response.status(404).json({
-      error: `Try adding a project first, cause there ain't none.`
-    });
-  };
-};
-
-function getAllColors(request, response) {
-  if (colors) {
-    response.status(200).json({
-      status: 'success',
-      data: colors,
-      message: 'Here\'s all the colors Duke.'
-    });
-  } else {
-    response.status(404).json({
-      error: 'I can\'t believe there aren\'t any colors.'
-    });
-  };
-};
-
-function addProject(request, response) {
-  var name = request.body.name.toLowerCase();
-  var projectExists = projects.find(proj => proj.name == name);
-  var newProject = { proj_id: projects.length + 1, palettes: [] };
-  if (!projectExists) {
-    response.status(200).json({
-      status: 'success',
-      data: Object.assign({}, { name }, newProject),
-      message: 'Added new project!'
-    });
-  } else {
-    response.status(400).json({
-      error: 'Project with that name already exists!'
-    });
-  };
-};
-
-function addColor(request, response) {
-  var color_hex = request.body.color;
-  var colorExists = colors.find(color => color.hex == color_hex);
-  var newColor = { color_id: colors.length + 1 };
-  if (!colorExists) {
-    response.status(200).json({
-      status: 'success',
-      data: Object.assign({}, { hex: color_hex }, newColor),
-      message: 'Added new color!'
-    });
-  } else {
-    response.status(400).json({
-      error: 'Color already exists!'
-    });
-  };
-};
-
-function addPalette(request, response) {
-  var userPalette = JSON.parse(request.body.palette);
-  var user = parseInt(request.params.project_id);
-  var project = projects.find(p => p.proj_id === user);
-  var newPalette = { pal_id: palettes.length + 1 };
-  if (project) {
-    var newPalette = Object.assign({}, { colors: userPalette }, newPalette);
-    palettes.push(newPalette);
-    project.palettes.push(newPalette.pal_id);
-    response.status(200).json({
-      status: 'success',
-      data: newPalette,
-      message: 'Added new palette!'
-    });
-  } else {
-    response.status(404).json({
-      error: 'This project does not exist!'
+    })
+    .catch(error => {
+      response.status(500).json({ error });
     })
   };
-};
-
 
 function getProjectPalettes(request, response) {
-  var user = parseInt(request.params.project_id);
-  var project = projects.find(p => p.proj_id === user);
-  if (!project) {
-    response.status(404).json({
-      status: 'failed',
-      message: 'This project doesn\'t exist!'
-    });
-  } else if (project.palettes.length) {
-    var projectPalettes = project.palettes.map(pal => palettes.find(p => p.pal_id === pal));
+  database('projects').where('id', request.params.project_id).select()
+    .then(project => {
+      if (project.length) {
+        database('palettes').where('proj_id', request.params.project_id).select()
+          .then(palettes => {
     response.status(200).json({
       status: 'success',
-      data: projectPalettes,
-      message: 'Retreived palettes!'
-    });
+              data: palettes,
+              message: 'Here are all the palettes!'
+            })
+          })
+          .catch(() => {
+    response.status(404).json({
+              error: `Ain't no palettes here.`
+            })
+          })
+      }
+    })
+    .catch(error => {
+      response.status(404).json({
+        status: 'failed',
+        error,
+        message: `This project doesn't exist!`
+      })
+    })
+  };
+
+function addProject(request, response) {
+  const project = request.body;
+
+  for (let requiredParemeter of ['name']) {
+    if(!project[requiredParemeter]) {
+      return response.status(422).send({ 
+        error: `Expected format: { name: <String> }. You're missing a "${requiredParemeter}" property.`
+      })
+    }
+  }
+
+  database('projects').insert(project, 'id')
+    .then(project => {
+      response.status(201).json({ id: project[0] })
+    })
+    .catch(error => response.status(500).json({ error }))
+  };
+
+function addColor(request, response) {
+  const color = request.body;
+
+  for (let requiredParemeter of ['hex', 'shape']) {
+    if (!color[requiredParemeter]) {
+      return response.status(422).send({ 
+        error: `Expected format: { hex: <String>, shape: <String> }. You're missing a "${requiredParemeter}" property.`
+      })
+    }
+  }
+
+  database('colors').insert(color, 'id')
+    .then(color => {
+      response.status(201).json({ id: color[0] })
+    })
+    .catch(error => response.status(500).json({ error }))
+}
+
+function addPalette(request, response) {
+  const palette = request.body;
+
+  for (let requiredParemeter of [
+    'color1', 
+    'color2', 
+    'color3', 
+    'color4', 
+    'color5', 
+    'name'
+  ]) {
+    if (!palette[requiredParemeter]) {
+      return response.status(422).send({ 
+        error: `You're missing a "${requiredParemeter}" property.`,
+        palette
+    })
+    }
+  }
+
+  database('projects').where('id', request.params.project_id).select()
+    .then(projects => {
+      if (projects.length) {
+        database('palettes').insert({...palette, proj_id: request.params.project_id}, 'id')
+          .then(palette => response.status(201).json({ id: palette[0] }))
+          .catch(error => response.status(500).json({ error }))
   } else {
     response.status(404).json({
-      status: 'failed',
-      message: 'This project doesn\'t have any palettes!'
-    });
-  };
+          error: `Could not find project with id ${request.params.project_id}`
+        })
+      }
+    })
+    .catch(error => {
+      response.status(500).json('adding palette didnt work');
+    })
 };
 
 function deletePalette(request, response) {
