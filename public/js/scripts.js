@@ -50,17 +50,13 @@ function spawnPalette(id) {
 
 }
 
-function selectProject(e) {
+async function selectProject(e) {
   const { innerText, id } = e.target;
+  if (!innerText || !id) return
   dropDown.innerText = innerText;
   dropDown.id = id;
-  getProjectPalettes(id);
-}
+  const palettes = await getProjectPalettes(id);
 
-function saveProject() {
-  let name = projectInput.value;
-  if (name !== '') addProject(name);
-  projectInput.value = '';
 }
 
 function generatePalette() {
@@ -97,6 +93,12 @@ function saveColorPalette() {
   }, 500);
   paletteInput.value = '';
 }
+
+function deleteProjectPalette(event) {
+  const { id } = event.target.parentNode.parentNode;
+  deletePalette(id);
+  const palette = document.getElementById(id)
+  palette.parentNode.removeChild(palette);
 }
 
 function lockColor(e) {
