@@ -16,6 +16,27 @@ function getAllProjects(request, response) {
     })
 };
 
+function getColor(request, response) {
+  database('colors').where('id', request.params.color_id).select()
+    .then(color => {
+      if (color.length) {
+        response.status(200).json({
+          status: 'success',
+          data: color,
+          message: 'Here is your color!'
+        })
+      } else {
+        response.status(404).json({
+          status: 'failed',
+          error,
+          message: `This color doesn't exist!`
+        })
+      }
+    })
+    .catch(error => {
+      response.status(500).json({ error })
+    })
+};
 function getProjectPalettes(request, response) {
   database('projects').where('id', request.params.project_id).select()
     .then(project => {
