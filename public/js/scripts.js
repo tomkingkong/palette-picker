@@ -77,18 +77,27 @@ function generatePalette() {
 
 function saveColorPalette() {
   const proj_id = parseInt(dropDown.id);
+  const projName = dropDown.innerText;
   const name = paletteInput.value;
   if (!name) return;
   const palette = { name };
+  let gems = [];
 
   colors.forEach( async (color, i) => {
     const { className, id } = color.childNodes[0];
-    const shape = className.split(' ')[1];
+    const shape = className;
     const hex = id;
+    gems.push({shape, hex});
     let c = await addColor(shape, hex);
     palette[`color${i+1}`] = c.id;
   });
-  setTimeout(() => { addPalette(proj_id, palette) }, 1000) 
+  setTimeout( async () => { 
+    let p = await addPalette(proj_id, palette);
+    const proj = document.getElementById(projName+proj_id);
+    proj.innerHTML += createPalette(name, gems, p.id);
+  }, 500);
+  paletteInput.value = '';
+}
 }
 
 function lockColor(e) {
