@@ -69,8 +69,7 @@ function generatePalette() {
       return;
     } else {
       const gem = new Gem();
-      generateGemClasses(`${gem.shape}`,`${gem.shape+i}`, gem.color);
-      color.innerHTML = `<div id="${gem.color}" class="${gem.shape+i} ${gem.shape}" />`;
+      color.innerHTML = `<div id="${gem.color}" class="${gem.shape}" style="background-color:${gem.color}" />`;
     }
   });
 }
