@@ -16,6 +16,7 @@ window.addEventListener('load', function() {
 
 dropDown.addEventListener('click', toggleDrop);
 dropContent.addEventListener('click', selectProject);
+savedProjects.addEventListener('click', selectProject);
 saveProjectForm.addEventListener('submit', saveProject);
 randomPalette.addEventListener('click', lockColor);
 paletteGenerator.addEventListener('click', generatePalette);
