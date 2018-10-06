@@ -11,12 +11,13 @@ const fetchCurry = (...paths) => (options, method, body) => {
     .catch(error => console.log(error));
 }
 
+const getColor = (id) => fetchCurry(`/colors/${id}`)({});
 const getAllProjects = () => fetchCurry('/projects')({});
-const getProjectPalettes = (projectId) => fetchCurry(`/${projectId}/palettes`)({});
+const getProjectPalettes = (id) => fetchCurry(`/${id}/palettes`)({});
 
 const addColor = (shape, hex) => fetchCurry(`/colors`)(false, 'POST', {shape, hex});
 const addProject = (name) => fetchCurry(`/projects`)(false, 'POST', {name});
-const addPalette = (projectId, palette) => fetchCurry(`/${projectId}/palettes`)(false, 'POST', {...palette});
+const addPalette = (id, palette) => fetchCurry(`/${id}/palettes`)(false, 'POST', {...palette});
 
-const deletePalette = (paletteId) => fetchCurry(`/palettes/${paletteId}`)(false, 'DELETE');
-const deleteProject = (projectId) => fetchCurry(`/projects/${projectId}`)(false, 'DELETE');
+const deletePalette = (id) => fetchCurry(`/palettes/${id}`)(false, 'DELETE');
+const deleteProject = (id) => fetchCurry(`/projects/${id}`)(false, 'DELETE');
