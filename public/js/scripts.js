@@ -40,10 +40,17 @@ function appendProjectLink(project) {
   let link = `<a id="${id}">${name}</a>`;
   dropContent.innerHTML += link;
 }
+function createProject(project, palettes) {
+  const { name, id } = project;
+  return (
+    `<article class="PROJECT__SAVED">
+      <h5 class="title" id="${id}">
+        ${name}
+      </h5>
+      <div id="${name+id}" class="PROJECT__PALETTES">
+        ${palettes.join('')}
       </div>
-    </article>`
-  )
-  savedProjects.innerHTML += savedProject;
+    </article>`);
 }
 
 async function spawnPalettes(id) {
