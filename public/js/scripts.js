@@ -46,7 +46,18 @@ function appendProjectLink(project) {
   savedProjects.innerHTML += savedProject;
 }
 
-function spawnPalette(id) {
+async function spawnPalettes(id) {
+  const projPalettes = await getProjectPalettes(id);
+  const palettes = projPalettes.data.map( async palette => {
+    const gems = [];
+    for (let i=1; i<6; i++) {
+      const gem = await getColor(palette[`color`+i]);
+      gems.push(gem.data[0]);
+    }
+     return createPalette(palette.name, gems, palette.id)
+  });
+  return await Promise.all(palettes)
+}
 
 function createPalette(name, gems, id) {
   return (
