@@ -26,7 +26,12 @@ async function populateProjects() {
   const projects = await getAllProjects();
   const { data, status } = projects;
   if (status === 'success') {
-    data.forEach(proj => spawnProject(proj))
+    savedProjects.innerHTML = '';
+    dropContent.innerHTML = '';
+    data.forEach(proj => {
+      appendProjectLink(proj);
+      spawnProject(proj);
+    });
   }
 }
 
