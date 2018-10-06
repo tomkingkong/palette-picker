@@ -11,6 +11,7 @@ const fetchCurry = (...paths) => (options, method, body) => {
     .catch(error => console.log(error));
 }
 
+const getColor = (id) => fetchCurry(`/colors/${id}`)({});
 const getAllProjects = () => fetchCurry('/projects')({});
 const getProjectPalettes = (projectId) => fetchCurry(`/${projectId}/palettes`)({});
 
