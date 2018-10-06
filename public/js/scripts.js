@@ -112,6 +112,16 @@ function generatePalette() {
   });
 }
 
+async function saveProject(e) {
+  e.preventDefault();
+  let name = projectInput.value;
+  if (name !== '') {
+    let projId = await addProject(name);
+    await spawnProject({id: projId, name, new:true});
+  };
+  projectInput.value = '';
+}
+
 function saveColorPalette() {
   const proj_id = parseInt(dropDown.id);
   const projName = dropDown.innerText;
