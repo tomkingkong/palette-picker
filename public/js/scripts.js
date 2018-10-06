@@ -40,6 +40,16 @@ function appendProjectLink(project) {
   let link = `<a id="${id}">${name}</a>`;
   dropContent.innerHTML += link;
 }
+
+async function spawnProject(project) {
+  let palettes = [];
+  if (!project.new) {
+    palettes = await spawnPalettes(project.id);
+  }
+  savedProjects.innerHTML += 
+    createProject(project, palettes);
+}
+
 function createProject(project, palettes) {
   const { name, id } = project;
   return (
