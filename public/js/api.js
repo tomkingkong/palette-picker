@@ -13,7 +13,7 @@ const fetchCurry = (...paths) => (options, method, body) => {
 
 const getColor = (id) => fetchCurry(`/colors/${id}`)({});
 const getAllProjects = () => fetchCurry('/projects')({});
-const getProjectPalettes = (projectId) => fetchCurry(`/${projectId}/palettes`)({});
+const getProjectPalettes = (id) => fetchCurry(`/${id}/palettes`)({});
 
 const addColor = (shape, hex) => fetchCurry(`/colors`)(false, 'POST', {shape, hex});
 const addProject = (name) => fetchCurry(`/projects`)(false, 'POST', {name});
