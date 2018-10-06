@@ -20,106 +20,31 @@
   border-radius: 50%; }
 
 .CUT_DIAMOND {
-  border-style: solid;
-  border-color: transparent transparent azure transparent;
-  border-width: 0 25px 25px 25px;
-  height: 0;
-  width: 100px;
-  position: relative;
-  margin: 0 0 5rem 0; }
-
-.CUT_DIAMOND:after {
-  content: "";
-  position: absolute;
-  top: 25px;
-  left: -25px;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-color: azure transparent transparent transparent;
-  border-width: 70px 50px 0 50px; }
+  min-width: 8rem;
+  min-height: 8rem;
+  -webkit-clip-path: polygon(20% 0%, 80% 0%, 100% 30%, 50% 100%, 0% 30%);
+  clip-path: polygon(20% 0%, 80% 0%, 100% 30%, 50% 100%, 0% 30%); }
 
 .DIAMOND {
-  width: 0;
-  height: 0;
-  border: 50px solid transparent;
-  border-bottom-color: paleturquoise;
-  position: relative;
-  margin: 0.1rem 0.5rem;
-  top: -50px; }
-
-.DIAMOND:after {
-  content: '';
-  position: absolute;
-  left: -50px;
-  top: 50px;
-  width: 0;
-  height: 0;
-  border: 50px solid transparent;
-  border-top-color: paleturquoise; }
+  min-width: 8rem;
+  min-height: 8rem;
+  -webkit-clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); }
 
 .HEXAGON {
-  width: 100px;
-  height: 55px;
-  background: thistle;
-  position: relative;
-  margin: 2rem 1rem; }
-
-.HEXAGON:before {
-  content: "";
-  position: absolute;
-  top: -25px;
-  left: 0;
-  width: 0;
-  height: 0;
-  border-left: 50px solid transparent;
-  border-right: 50px solid transparent;
-  border-bottom: 25px solid thistle; }
-
-.HEXAGON:after {
-  content: "";
-  position: absolute;
-  bottom: -25px;
-  left: 0;
-  width: 0;
-  height: 0;
-  border-left: 50px solid transparent;
-  border-right: 50px solid transparent;
-  border-top: 25px solid thistle; }
+  min-width: 8rem;
+  min-height: 8rem;
+  -webkit-clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); }
 
 .TRIANGLE {
-  width: 0;
-  height: 0;
-  border-left: 50px solid transparent;
-  border-right: 50px solid transparent;
-  border-bottom: 100px solid indianred;
-  margin: 1rem; }
+  min-width: 8rem;
+  min-height: 8rem;
+  -webkit-clip-path: polygon(50% 0%, 0% 80%, 100% 100%);
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%); }
 
 .OCTAGON {
-  width: 100px;
-  height: 100px;
-  background: palegreen;
-  position: relative;
-  margin: 1rem; }
-
-.OCTAGON:before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  border-bottom: 29px solid palegreen;
-  border-left: 30px solid #eee;
-  border-right: 29px solid #eee;
-  width: 42px;
-  height: 0; }
-
-.OCTAGON:after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  border-top: 29px solid palegreen;
-  border-left: 30px solid #eee;
-  border-right: 29px solid #eee;
-  width: 42px;
-  height: 0; }
+  min-width: 8rem;
+  min-height: 8rem;
+  -webkit-clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+  clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%); }
