@@ -17,7 +17,7 @@ const getProjectPalettes = (id) => fetchCurry(`/${id}/palettes`)({});
 
 const addColor = (shape, hex) => fetchCurry(`/colors`)(false, 'POST', {shape, hex});
 const addProject = (name) => fetchCurry(`/projects`)(false, 'POST', {name});
-const addPalette = (projectId, palette) => fetchCurry(`/${projectId}/palettes`)(false, 'POST', {...palette});
+const addPalette = (id, palette) => fetchCurry(`/${id}/palettes`)(false, 'POST', {...palette});
 
 const deletePalette = (paletteId) => fetchCurry(`/palettes/${paletteId}`)(false, 'DELETE');
 const deleteProject = (projectId) => fetchCurry(`/projects/${projectId}`)(false, 'DELETE');
