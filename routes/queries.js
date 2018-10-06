@@ -37,6 +37,7 @@ function getColor(request, response) {
       response.status(500).json({ error })
     })
 };
+
 function getProjectPalettes(request, response) {
   database('projects').where('id', request.params.project_id).select()
     .then(project => {
@@ -93,7 +94,6 @@ function addProject(request, response) {
 
 function addColor(request, response) {
   const color = request.body;
-
   for (let requiredParemeter of ['hex', 'shape']) {
     if (!color[requiredParemeter]) {
       return response.status(422).send({ 
@@ -146,53 +146,26 @@ function addPalette(request, response) {
 };
 
 function deletePalette(request, response) {
-  var palette = parseInt(request.params.palette_id);
-  var projId = parseInt(request.params.project_id);
-  var user = projects.find(p => p.proj_id === projId);
-  if (user) {
-    var paletteExists = user.palettes.includes(palette);
-    if (paletteExists) {
-      user.palettes = user.palettes.filter(id => id !== palette);
-      response.status(200).json({
-        status: 'success',
-        data: user.palettes,
-        message: 'Palette has been removed!'
-      });
-    } else {
-      response.status(404).json({
-        status: 'failed',
-        message: 'This palette never existed!'
-      });
-    };
-  } else {
-    response.status(404).json({
-      status: 'failed',
-      message: 'This user does\'t exist!'
-    });
-  };
+  database('palettes').where('id', request.params.palette_id).del()
+    .then(() => response.status(200).json({message:'removed palette'}))
+    .catch(error => response.status(500).json({ error }));
 };
 
 function deleteProject(request, response) {
-  var user = parseInt(request.params.project_id);
-  var projectExists = projects.find(p => p.proj_id === user);
-  if (projectExists) {
-    projects = projects.filter(p => p.proj_id !== user);
-    response.status(200).json({
-      status: 'success',
-      message: 'Project has been removed!'
-    });
-  } else {
-    response.status(404).json({
-      status: 'failed',
-      message: 'This project never existed!'
-    });
-  };
+  database('projects').where('id', request.params.project_id).del()
+  .then(project => {
+    database('palettes').where('proj_id', project.id).del()
+      .then(() => response.status(200).json({message:`deleted all palettes`}))
+      .catch(error => response.status(500).json({ error }))
+  })
+  .catch(error => response.status(404).json({ error, message: `Couldn't find this project!` }));
 };
 
 module.exports = {
   addColor,
   addProject,
   addPalette,
+  getColor,
   getAllProjects,
   getProjectPalettes,
   deletePalette,
