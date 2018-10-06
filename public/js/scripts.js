@@ -48,6 +48,20 @@ function appendProjectLink(project) {
 
 function spawnPalette(id) {
 
+function createPalette(name, gems, id) {
+  return (
+    `<article id="${id}" class="PALETTE">
+      <h5 class="name">${name}</h5>
+      <section class="gems">
+        <div class="saved ${gems[0].shape}" style="background-color:${gems[0].hex}"></div>
+        <div class="saved ${gems[1].shape}" style="background-color:${gems[1].hex}"></div>
+        <div class="saved ${gems[2].shape}" style="background-color:${gems[2].hex}"></div>
+        <div class="saved ${gems[3].shape}" style="background-color:${gems[3].hex}"></div>
+        <div class="saved ${gems[4].shape}" style="background-color:${gems[4].hex}"></div>
+        <div class="trash" onclick="deleteProjectPalette(event)">🗑</div>
+      </section>
+    </article>
+    `)
 }
 
 async function selectProject(e) {
