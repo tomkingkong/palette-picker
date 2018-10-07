@@ -112,45 +112,25 @@ function generatePalette() {
   });
 }
 
-async function saveProject(e) {
-  e.preventDefault();
-  let name = projectInput.value;
-  if (name !== '') {
-    let projId = await addProject(name);
-    await spawnProject({id: projId, name, new:true});
-  };
-  projectInput.value = '';
-}
-
-function saveColorPalette() {
-  const proj_id = parseInt(dropDown.id);
-  const projName = dropDown.innerText;
-  const name = paletteInput.value;
-  if (!name) return;
-  const palette = { name };
-  let gems = [];
-
-  colors.forEach( async (color, i) => {
-    const { className, id } = color.childNodes[0];
-    const shape = className;
-    const hex = id;
+function insertGemsToBoard(e) {
+  const palette = e.target.querySelectorAll('div');
+  const gems = [];
+  palette.forEach(gem => {
+    if (gem.classList[0] !== 'trash') {
+      let shape = gem.classList[1];
+      let hex = gem.style.backgroundColor;
     gems.push({shape, hex});
-    let c = await addColor(shape, hex);
-    palette[`color${i+1}`] = c.id;
-  });
-  setTimeout( async () => { 
-    let p = await addPalette(proj_id, palette);
-    const proj = document.getElementById(projName+proj_id);
-    proj.innerHTML += createPalette(name, gems, p.id);
-  }, 500);
-  paletteInput.value = '';
+    }
+  })
+  gems.forEach((gem, i) => {
+    if (!colors[i].classList.contains('locked')) {
+      colors[i].innerHTML = 
+        `<div 
+          id="${gem.hex}" 
+          class="${gem.shape}" 
+          style="background-color:${gem.hex}" />`
 }
-
-function deleteProjectPalette(event) {
-  const { id } = event.target.parentNode.parentNode;
-  deletePalette(id);
-  const palette = document.getElementById(id)
-  palette.parentNode.removeChild(palette);
+  })
 }
 
 function lockColor(e) {
