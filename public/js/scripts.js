@@ -154,10 +154,10 @@ function deleteProjectPalette(event) {
 }
 
 function lockColor(e) {
-  const { className, classList, parentNode } = e.target;
-  if(className.includes('COLOR')) {
+  const { classList, parentNode } = e.target;
+  if(classList.contains('COLOR')) {
    classList.toggle('locked');
-  } else if(parentNode.className.includes('COLOR')) {
+  } else if(parentNode.classList.contains('COLOR')) {
     parentNode.classList.toggle('locked');
   }
 }
