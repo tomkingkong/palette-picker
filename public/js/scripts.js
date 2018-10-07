@@ -102,12 +102,14 @@ async function selectProject(e) {
 }
 
 function generatePalette() {
-  colors.forEach((color, i) => {
-    if (color.className.includes('locked')) {
-      return;
-    } else {
+  colors.forEach(color => {
+    if (!color.classList.contains('locked')) {
       const gem = new Gem();
-      color.innerHTML = `<div id="${gem.color}" class="${gem.shape}" style="background-color:${gem.color}" />`;
+      color.innerHTML = 
+        `<div 
+          id="${gem.color}" 
+          class="${gem.shape}" 
+          style="background-color:${gem.color}" />`;
     }
   });
 }
