@@ -8,6 +8,8 @@ const saveProjectForm = document.querySelector('.PROJECTS__FORM');
 const projectInput = document.querySelector('.PROJ__INPUT');
 const paletteInput = document.querySelector('.PALETTE__INPUT');
 const savedProjects = document.querySelector('.PROJECTS__CONTAINER');
+const currentPalettes = document.querySelector('ul');
+const gemsPalettes = document.querySelector('.PROJECT__PALETTES');
 
 window.addEventListener('load', function() {
   generatePalette();
@@ -21,6 +23,7 @@ saveProjectForm.addEventListener('submit', saveProject);
 randomPalette.addEventListener('click', lockColor);
 paletteGenerator.addEventListener('click', generatePalette);
 savePaletteBtn.addEventListener('click', saveColorPalette);
+gemsPalettes.addEventListener('click', insertGemsToBoard);
 
 async function populateProjects() {
   const projects = await getAllProjects();
