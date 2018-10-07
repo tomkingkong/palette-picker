@@ -13,7 +13,7 @@ window.addEventListener('load', function() {
   generatePalette();
   populateProjects();
 });
-
+window.addEventListener('click', handleDropDown);
 dropDown.addEventListener('click', toggleDrop);
 dropContent.addEventListener('click', selectProject);
 savedProjects.addEventListener('click', selectProject);
@@ -166,7 +166,7 @@ function toggleDrop() {
   document.getElementById('project-dropdown').classList.toggle('show');
 }
 
-window.onclick = function(event) {
+function handleDropDown(event) {
   if (!event.target.matches('.drop_btn')) {
     const dropdowns = document.getElementsByClassName('dropdown-content');
     for (let i = 0; i < dropdowns.length; i++) {
