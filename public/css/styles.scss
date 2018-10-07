@@ -93,7 +93,7 @@ button {
   flex-direction: column;
   justify-content: center;
   margin: 1rem 0;
-  .GENERATOR {
+  .GENERATOR { 
     background: firebrick;
     border: 0.2rem solid cadetblue;
     border-radius: 100%;
@@ -169,7 +169,7 @@ button {
       inset 0.2rem 0.2rem 1rem 0.01rem rgba(255, 255, 255, 0.151);
     p {
       color: rgb(189, 186, 181);
-}
+    }
   }
 }
 
@@ -385,7 +385,7 @@ button {
   }
   .title:hover {
     background: floralwhite;
-}
+  }
   .title:active {
     box-shadow: none;
   }
@@ -448,14 +448,6 @@ button {
       max-height: 2.5rem;
       max-width: 2.5rem;  
       min-height: 2.5rem;
-      min-width: 2.5rem;
-    }
-  }
-  .BOARD {
-    max-width: 100%;
-    margin: 0;
-  }
-}     min-height: 2.5rem;
       min-width: 2.5rem;
     }
   }
