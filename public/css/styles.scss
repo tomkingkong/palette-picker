@@ -424,7 +424,16 @@ button {
   }
 }
 
-/* MEDIA QUERIES */
+@media only screen and (max-width: 420px) {
+  .RANDOM__PALETTE {
+    div {
+      max-height: 3.5rem;
+      max-width: 3.5rem;  
+      min-height: 3.5rem;
+      min-width: 3.5rem;
+    }
+  }
+}
 
 @media only screen and (max-width: 320px) {
   .GEN__PALETTE {
