@@ -54,6 +54,12 @@ async function saveProject(e) {
   }
   projectInput.value = '';
 }
+function projNameError() {
+  projectInput.value = 'NAME TAKEN!';
+  setTimeout(() => {
+    projectInput.value = '';
+  }, 2000);
+}
 async function spawnProject(project) {
   let palettes = [];
   if (!project.new) {
