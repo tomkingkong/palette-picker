@@ -60,6 +60,40 @@ function projNameError() {
     projectInput.value = '';
   }, 2000);
 }
+
+function saveColorPalette() {
+  const proj_id = parseInt(dropDown.id);
+  const projName = dropDown.innerText;
+  const name = paletteInput.value;
+  const palette = { name };
+  let gems = [];
+  
+  if (!name || !projName === 'Projects') {
+    paletteInput.value = 'INVALID! Try Again',
+    setTimeout(() => {
+      paletteInput.value = ''
+      return
+    }, 2000);
+    return
+  };
+
+  colors.forEach(async (color, i) => {
+    const { className, id } = color.childNodes[0];
+    const shape = className;
+    const hex = id;
+    gems.push({shape, hex});
+    let c = await addColor(shape, hex);
+    palette[`color${i+1}`] = c.id;
+  });
+
+  setTimeout(async () => { 
+    let p = await addPalette(proj_id, palette);
+    const proj = document.getElementById(projName+proj_id);
+    proj.innerHTML += createPalette(name, gems, p.id);
+    currentPalettes.innerHTML += createPalette(name, gems, p.id);
+    paletteInput.value = '';
+  }, 100);
+}
 async function spawnProject(project) {
   let palettes = [];
   if (!project.new) {
