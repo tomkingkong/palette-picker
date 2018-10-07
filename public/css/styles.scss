@@ -314,7 +314,6 @@ button {
       min-width: 4rem;
       width: 100%;
       max-width: 8rem;
-
     }
   }
 }
@@ -324,8 +323,10 @@ button {
 .PROJECT__PALETTES {
   display: flex;
   flex-direction: column;
+  list-style: none;
   align-items: center;
   overflow: scroll;
+  padding: 0;
   max-height: 12rem;
   min-width: fit-content;
   width: 100%;
@@ -342,6 +343,7 @@ button {
   width: fit-content;
   margin: 0.1rem auto;
   .name {
+    color: white;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     font-size: 90%;
     text-align: center;
@@ -350,31 +352,42 @@ button {
     padding: 0.1rem;
   }
   .gems {
+    cursor: pointer;
     display: flex;
     align-items: center;
     width: 100%;
   }
   .trash {
     cursor: pointer;
-    margin: 0 0 0 0.1rem;
+    margin: 0 0 0 0.8rem;
   }
 }
 
 .PROJECT__SAVED {
+  background: #1f1f1f;
+  border: 0.1rem solid rgba(210, 105, 30, 0.283);
+  border-radius: 0.2rem;
+  padding: 0.1rem;
   height: auto;
   width: 10rem;
   margin: 0.5rem;
-  border: 0.1rem solid chocolate;
   .title {
     cursor: pointer;
-    background: floralwhite;
+    background: #fff;
     border-radius: 0.2rem;
     box-shadow: 0rem 0.1rem 0.5rem paleturquoise;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     font-size: 90%;
-    padding: 0.5rem;
-    margin: 0;
     text-align: center;
+    padding: 0.5rem;
+    width: 96%;
+    margin: 0 auto;
+  }
+  .title:hover {
+    background: floralwhite;
+}
+  .title:active {
+    box-shadow: none;
   }
 }
 
