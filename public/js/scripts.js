@@ -54,6 +54,7 @@ async function saveProject(e) {
   }
   projectInput.value = '';
 }
+
 function projNameError() {
   projectInput.value = 'NAME TAKEN!';
   setTimeout(() => {
@@ -94,6 +95,7 @@ function saveColorPalette() {
     paletteInput.value = '';
   }, 100);
 }
+
 async function spawnProject(project) {
   let palettes = [];
   if (!project.new) {
@@ -181,7 +183,7 @@ function insertGemsToBoard(e) {
     if (gem.classList[0] !== 'trash') {
       let shape = gem.classList[1];
       let hex = gem.style.backgroundColor;
-    gems.push({shape, hex});
+      gems.push({shape, hex});
     }
   })
   gems.forEach((gem, i) => {
@@ -191,7 +193,7 @@ function insertGemsToBoard(e) {
           id="${gem.hex}" 
           class="${gem.shape}" 
           style="background-color:${gem.hex}" />`
-}
+    }
   })
 }
 
