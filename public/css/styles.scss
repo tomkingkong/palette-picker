@@ -411,7 +411,18 @@ button {
   margin: 0.5rem 0 0 0;
 }
 
+/* MEDIA QUERIES */
 
+@media only screen and (max-width: 620px) {
+  .RANDOM__PALETTE {
+    div {
+      max-height: 5rem;
+      max-width: 5rem;  
+      min-height: 5rem;
+      min-width: 5rem;
+    }
+  }
+}
 
 /* MEDIA QUERIES */
 
