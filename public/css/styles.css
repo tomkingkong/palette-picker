@@ -2,6 +2,9 @@
 * {
   box-sizing: border-box; }
 
+a {
+  cursor: pointer; }
+
 body {
   margin: 0;
   padding: 0; }
@@ -37,9 +40,9 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #eee;
-  border: 0.2rem solid gold;
-  border-radius: 0.8rem;
+  background: #1f1f1f;
+  border: 0.2rem solid #fff;
+  border-radius: 0.5rem;
   padding: 1rem;
   min-width: 8rem;
   width: 100%;
@@ -59,9 +62,9 @@ button {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background: paleturquoise;
-  border: 0.2rem solid gold;
-  border-radius: 0.2rem;
+  background: #1f1f1f;
+  border: 0.2rem solid #fff;
+  border-radius: 0.5rem;
   min-width: 4rem;
   width: 10rem;
   margin: 0.5rem auto;
@@ -72,16 +75,18 @@ button {
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  justify-content: center; }
+  justify-content: center;
+  margin: 1rem 0; }
   .GEN__BUTTONS .GENERATOR {
+    background: firebrick;
+    border: 0.2rem solid cadetblue;
+    border-radius: 100%;
+    box-shadow: inset -0.2rem -0.2rem 1rem 0.01rem rgba(2, 15, 38, 0.516), inset 0.2rem 0.2rem 1rem 0.01rem rgba(255, 255, 255, 0.251);
     align-self: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: firebrick;
-    border: 0.2rem solid cadetblue;
-    border-radius: 100%;
     width: 8rem;
     height: 8rem; }
     .GEN__BUTTONS .GENERATOR p {
@@ -90,7 +95,27 @@ button {
       font-size: 120%;
       text-align: center;
       margin: 0.1rem auto; }
+  .GEN__BUTTONS .GENERATOR:hover {
+    background: #8c1a1a;
+    box-shadow: inset -0.2rem -0.2rem 1rem 0.01rem rgba(2, 15, 38, 0.116), inset 0.2rem 0.2rem 1rem 0.01rem rgba(255, 255, 255, 0.151); }
+    .GEN__BUTTONS .GENERATOR:hover p {
+      color: #bdbab5; }
+  .GEN__BUTTONS .PALETTE__INPUT {
+    color: #694ba4;
+    border-radius: 0.2rem;
+    box-shadow: inset 0.08rem 0.08rem 0.4rem rgba(42, 46, 52, 0.517);
+    border: none;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 80%;
+    padding-left: 0.5rem;
+    outline-color: #347ff056;
+    height: 1.65rem;
+    min-width: 4rem;
+    width: 100%;
+    max-width: 8rem;
+    margin: 0 auto; }
   .GEN__BUTTONS .SAVE__PALETTE {
+    box-shadow: inset -0.2rem -0.2rem 1rem 0.01rem rgba(2, 15, 38, 0.516), inset 0.2rem 0.2rem 1rem 0.01rem rgba(255, 255, 255, 0.251);
     align-self: center;
     display: flex;
     flex-direction: column;
@@ -105,9 +130,14 @@ button {
     .GEN__BUTTONS .SAVE__PALETTE p {
       color: floralwhite;
       font-family: 'Courier New', Courier, monospace;
-      font-size: 100%;
+      font-size: 90%;
       text-align: center;
       margin: 0.1rem auto; }
+  .GEN__BUTTONS .SAVE__PALETTE:hover {
+    background: #1b5f83;
+    box-shadow: inset -0.2rem -0.2rem 1rem 0.01rem rgba(2, 15, 38, 0.116), inset 0.2rem 0.2rem 1rem 0.01rem rgba(255, 255, 255, 0.151); }
+    .GEN__BUTTONS .SAVE__PALETTE:hover p {
+      color: #bdbab5; }
 
 /* CURRENT PROJECT */
 .CURRENT {
@@ -238,8 +268,10 @@ button {
 .PROJECT__PALETTES {
   display: flex;
   flex-direction: column;
+  list-style: none;
   align-items: center;
   overflow: scroll;
+  padding: 0;
   max-height: 12rem;
   min-width: fit-content;
   width: 100%;
@@ -255,6 +287,7 @@ button {
   width: fit-content;
   margin: 0.1rem auto; }
   .PALETTE .name {
+    color: white;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     font-size: 90%;
     text-align: center;
@@ -262,28 +295,37 @@ button {
     margin: 0;
     padding: 0.1rem; }
   .PALETTE .gems {
+    cursor: pointer;
     display: flex;
     align-items: center;
     width: 100%; }
   .PALETTE .trash {
     cursor: pointer;
-    margin: 0 0 0 0.1rem; }
+    margin: 0 0 0 0.8rem; }
 
 .PROJECT__SAVED {
+  background: #1f1f1f;
+  border: 0.1rem solid rgba(210, 105, 30, 0.283);
+  border-radius: 0.2rem;
+  padding: 0.1rem;
   height: auto;
   width: 10rem;
-  margin: 0.5rem;
-  border: 0.1rem solid chocolate; }
+  margin: 0.5rem; }
   .PROJECT__SAVED .title {
     cursor: pointer;
-    background: floralwhite;
+    background: #fff;
     border-radius: 0.2rem;
     box-shadow: 0rem 0.1rem 0.5rem paleturquoise;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     font-size: 90%;
+    text-align: center;
     padding: 0.5rem;
-    margin: 0;
-    text-align: center; }
+    width: 96%;
+    margin: 0 auto; }
+  .PROJECT__SAVED .title:hover {
+    background: floralwhite; }
+  .PROJECT__SAVED .title:active {
+    box-shadow: none; }
 
 /* SAVED PALETTES */
 .saved {
@@ -302,12 +344,31 @@ button {
   margin: 0.5rem 0 0 0; }
 
 /* MEDIA QUERIES */
+@media only screen and (max-width: 620px) {
+  .RANDOM__PALETTE div {
+    max-height: 5rem;
+    max-width: 5rem;
+    min-height: 5rem;
+    min-width: 5rem; } }
+
+@media only screen and (max-width: 420px) {
+  .RANDOM__PALETTE div {
+    max-height: 3.5rem;
+    max-width: 3.5rem;
+    min-height: 3.5rem;
+    min-width: 3.5rem; } }
+
 @media only screen and (max-width: 320px) {
   .GEN__PALETTE {
     order: 2;
     width: 100%; }
     .GEN__PALETTE .CURRENT {
       order: 2; }
+  .RANDOM__PALETTE div {
+    max-height: 2.5rem;
+    max-width: 2.5rem;
+    min-height: 2.5rem;
+    min-width: 2.5rem; }
   .BOARD {
     max-width: 100%;
     margin: 0; } }

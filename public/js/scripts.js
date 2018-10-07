@@ -8,12 +8,14 @@ const saveProjectForm = document.querySelector('.PROJECTS__FORM');
 const projectInput = document.querySelector('.PROJ__INPUT');
 const paletteInput = document.querySelector('.PALETTE__INPUT');
 const savedProjects = document.querySelector('.PROJECTS__CONTAINER');
+const currentPalettes = document.querySelector('ul');
+const gemsPalettes = document.querySelector('.PROJECT__PALETTES');
 
 window.addEventListener('load', function() {
   generatePalette();
   populateProjects();
 });
-
+window.addEventListener('click', handleDropDown);
 dropDown.addEventListener('click', toggleDrop);
 dropContent.addEventListener('click', selectProject);
 savedProjects.addEventListener('click', selectProject);
@@ -21,6 +23,7 @@ saveProjectForm.addEventListener('submit', saveProject);
 randomPalette.addEventListener('click', lockColor);
 paletteGenerator.addEventListener('click', generatePalette);
 savePaletteBtn.addEventListener('click', saveColorPalette);
+gemsPalettes.addEventListener('click', insertGemsToBoard);
 
 async function populateProjects() {
   const projects = await getAllProjects();
@@ -39,6 +42,58 @@ function appendProjectLink(project) {
   const { name, id } = project;
   let link = `<a id="${id}">${name}</a>`;
   dropContent.innerHTML += link;
+}
+
+async function saveProject(e) {
+  e.preventDefault();
+  let name = projectInput.value;
+  if (name !== '') {
+    let projId = await addProject(name);
+    if (projId.error) return projNameError();
+    await spawnProject({id: projId, name, new:true});
+  }
+  projectInput.value = '';
+}
+
+function projNameError() {
+  projectInput.value = 'NAME TAKEN!';
+  setTimeout(() => {
+    projectInput.value = '';
+  }, 2000);
+}
+
+function saveColorPalette() {
+  const proj_id = parseInt(dropDown.id);
+  const projName = dropDown.innerText;
+  const name = paletteInput.value;
+  const palette = { name };
+  let gems = [];
+  
+  if (!name || !projName === 'Projects') {
+    paletteInput.value = 'INVALID! Try Again',
+    setTimeout(() => {
+      paletteInput.value = ''
+      return
+    }, 2000);
+    return
+  };
+
+  colors.forEach(async (color, i) => {
+    const { className, id } = color.childNodes[0];
+    const shape = className;
+    const hex = id;
+    gems.push({shape, hex});
+    let c = await addColor(shape, hex);
+    palette[`color${i+1}`] = c.id;
+  });
+
+  setTimeout(async () => { 
+    let p = await addPalette(proj_id, palette);
+    const proj = document.getElementById(projName+proj_id);
+    proj.innerHTML += createPalette(name, gems, p.id);
+    currentPalettes.innerHTML += createPalette(name, gems, p.id);
+    paletteInput.value = '';
+  }, 100);
 }
 
 async function spawnProject(project) {
@@ -65,7 +120,7 @@ function createProject(project, palettes) {
 
 async function spawnPalettes(id) {
   const projPalettes = await getProjectPalettes(id);
-  const palettes = projPalettes.data.map( async palette => {
+  const palettes = projPalettes.data.map(async palette => {
     const gems = [];
     for (let i=1; i<6; i++) {
       const gem = await getColor(palette[`color`+i]);
@@ -73,7 +128,7 @@ async function spawnPalettes(id) {
     }
      return createPalette(palette.name, gems, palette.id)
   });
-  return await Promise.all(palettes)
+  return await Promise.all(palettes);
 }
 
 function createPalette(name, gems, id) {
@@ -97,53 +152,8 @@ async function selectProject(e) {
   if (!innerText || !id) return
   dropDown.innerText = innerText;
   dropDown.id = id;
-  const palettes = await getProjectPalettes(id);
-
-}
-
-function generatePalette() {
-  colors.forEach((color, i) => {
-    if (color.className.includes('locked')) {
-      return;
-    } else {
-      const gem = new Gem();
-      color.innerHTML = `<div id="${gem.color}" class="${gem.shape}" style="background-color:${gem.color}" />`;
-    }
-  });
-}
-
-async function saveProject(e) {
-  e.preventDefault();
-  let name = projectInput.value;
-  if (name !== '') {
-    let projId = await addProject(name);
-    await spawnProject({id: projId, name, new:true});
-  };
-  projectInput.value = '';
-}
-
-function saveColorPalette() {
-  const proj_id = parseInt(dropDown.id);
-  const projName = dropDown.innerText;
-  const name = paletteInput.value;
-  if (!name) return;
-  const palette = { name };
-  let gems = [];
-
-  colors.forEach( async (color, i) => {
-    const { className, id } = color.childNodes[0];
-    const shape = className;
-    const hex = id;
-    gems.push({shape, hex});
-    let c = await addColor(shape, hex);
-    palette[`color${i+1}`] = c.id;
-  });
-  setTimeout( async () => { 
-    let p = await addPalette(proj_id, palette);
-    const proj = document.getElementById(projName+proj_id);
-    proj.innerHTML += createPalette(name, gems, p.id);
-  }, 500);
-  paletteInput.value = '';
+  const palettes = await spawnPalettes(id);
+  currentPalettes.innerHTML = palettes.join('');
 }
 
 function deleteProjectPalette(event) {
@@ -153,11 +163,45 @@ function deleteProjectPalette(event) {
   palette.parentNode.removeChild(palette);
 }
 
+function generatePalette() {
+  colors.forEach(color => {
+    if (!color.classList.contains('locked')) {
+      const gem = new Gem();
+      color.innerHTML = 
+        `<div 
+          id="${gem.color}" 
+          class="${gem.shape}" 
+          style="background-color:${gem.color}" />`;
+    }
+  });
+}
+
+function insertGemsToBoard(e) {
+  const palette = e.target.querySelectorAll('div');
+  const gems = [];
+  palette.forEach(gem => {
+    if (gem.classList[0] !== 'trash') {
+      let shape = gem.classList[1];
+      let hex = gem.style.backgroundColor;
+      gems.push({shape, hex});
+    }
+  })
+  gems.forEach((gem, i) => {
+    if (!colors[i].classList.contains('locked')) {
+      colors[i].innerHTML = 
+        `<div 
+          id="${gem.hex}" 
+          class="${gem.shape}" 
+          style="background-color:${gem.hex}" />`
+    }
+  })
+}
+
 function lockColor(e) {
-  const { className, classList, parentNode } = e.target;
-  if(className.includes('COLOR')) {
+  const { classList, parentNode } = e.target;
+  if(classList.contains('COLOR')) {
    classList.toggle('locked');
-  } else if(parentNode.className.includes('COLOR')) {
+  } else if(parentNode.classList.contains('COLOR')) {
     parentNode.classList.toggle('locked');
   }
 }
@@ -166,7 +210,7 @@ function toggleDrop() {
   document.getElementById('project-dropdown').classList.toggle('show');
 }
 
-window.onclick = function(event) {
+function handleDropDown(event) {
   if (!event.target.matches('.drop_btn')) {
     const dropdowns = document.getElementsByClassName('dropdown-content');
     for (let i = 0; i < dropdowns.length; i++) {
