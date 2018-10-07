@@ -97,7 +97,9 @@ async function selectProject(e) {
   if (!innerText || !id) return
   dropDown.innerText = innerText;
   dropDown.id = id;
-  const palettes = await getProjectPalettes(id);
+  const palettes = await spawnPalettes(id);
+  currentPalettes.innerHTML = palettes.join('');
+}
 
 }
 
