@@ -44,6 +44,16 @@ function appendProjectLink(project) {
   dropContent.innerHTML += link;
 }
 
+async function saveProject(e) {
+  e.preventDefault();
+  let name = projectInput.value;
+  if (name !== '') {
+    let projId = await addProject(name);
+    if (projId.error) return projNameError();
+    await spawnProject({id: projId, name, new:true});
+  }
+  projectInput.value = '';
+}
 async function spawnProject(project) {
   let palettes = [];
   if (!project.new) {
