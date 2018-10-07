@@ -65,7 +65,7 @@ function createProject(project, palettes) {
 
 async function spawnPalettes(id) {
   const projPalettes = await getProjectPalettes(id);
-  const palettes = projPalettes.data.map( async palette => {
+  const palettes = projPalettes.data.map(async palette => {
     const gems = [];
     for (let i=1; i<6; i++) {
       const gem = await getColor(palette[`color`+i]);
@@ -73,7 +73,7 @@ async function spawnPalettes(id) {
     }
      return createPalette(palette.name, gems, palette.id)
   });
-  return await Promise.all(palettes)
+  return await Promise.all(palettes);
 }
 
 function createPalette(name, gems, id) {
