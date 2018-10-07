@@ -101,6 +101,11 @@ async function selectProject(e) {
   currentPalettes.innerHTML = palettes.join('');
 }
 
+function deleteProjectPalette(event) {
+  const { id } = event.target.parentNode.parentNode;
+  deletePalette(id);
+  const palette = document.getElementById(id)
+  palette.parentNode.removeChild(palette);
 }
 
 function generatePalette() {
