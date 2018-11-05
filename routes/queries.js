@@ -79,7 +79,7 @@ function addProject(request, response) {
 
   database('projects').where('name', project.name).select()
     .then(existingProject => {
-      if(!existingProject.length) {
+      if (!existingProject.length) {
         database('projects').insert(project, 'id')
           .then(project => {
             response.status(201).json({ id: project[0] })
