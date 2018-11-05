@@ -69,6 +69,23 @@ function saveColorPalette() {
   const palette = { name };
   let gems = [];
   
+  async function retreiveGem(color, i) {
+    const { className, id } = color.childNodes[0];
+    const shape = className;
+    const hex = id;
+    gems.push({shape, hex});
+    let c = await addColor(shape, hex);
+    palette[`color${i+1}`] = c.id;
+  }
+
+  async function appendPalette() {
+    let p = await addPalette(proj_id, palette);
+    const proj = document.getElementById(projName+proj_id);
+    proj.innerHTML += createPalette(name, gems, p.id);
+    currentPalettes.innerHTML += createPalette(name, gems, p.id);
+    paletteInput.value = '';
+  }
+
   if (!name || !projName === 'Projects') {
     paletteInput.value = 'INVALID! Try Again',
     setTimeout(() => {
@@ -78,22 +95,8 @@ function saveColorPalette() {
     return
   };
 
-  colors.forEach(async (color, i) => {
-    const { className, id } = color.childNodes[0];
-    const shape = className;
-    const hex = id;
-    gems.push({shape, hex});
-    let c = await addColor(shape, hex);
-    palette[`color${i+1}`] = c.id;
-  });
-
-  setTimeout(async () => { 
-    let p = await addPalette(proj_id, palette);
-    const proj = document.getElementById(projName+proj_id);
-    proj.innerHTML += createPalette(name, gems, p.id);
-    currentPalettes.innerHTML += createPalette(name, gems, p.id);
-    paletteInput.value = '';
-  }, 100);
+  colors.forEach((color, i) => retreiveGem(color, i));
+  setTimeout(() => appendPalette(), 100);
 }
 
 async function spawnProject(project) {

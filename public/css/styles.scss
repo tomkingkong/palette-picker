@@ -25,7 +25,11 @@ button {
 }
 
 .TITLE {
+  cursor: default;
   border-radius: 2rem;
+  box-shadow: 
+    inset 0.1rem 0.1rem 0.5rem 0.01rem rgba(255, 255, 255, 0.644),
+    inset -0.1rem -0.1rem 0.5rem 0.01rem rgba(0, 0, 0, 0.856);
   border: 0.25rem ridge rgba(7, 178, 230, 0.934);
   background: #3e0ba5;
   color: #fff;
@@ -115,7 +119,7 @@ button {
       margin: 0.1rem auto;
     }
   }
-  .GENERATOR:hover {
+  .GENERATOR:active {
     background: rgb(140, 26, 26);
     box-shadow: 
     inset -0.2rem -0.2rem 1rem 0.01rem rgba(2, 15, 38, 0.116),
@@ -162,7 +166,7 @@ button {
       margin: 0.1rem auto;
     }
   }
-  .SAVE__PALETTE:hover {
+  .SAVE__PALETTE:active {
     background: rgb(27, 95, 131);
     box-shadow: 
       inset -0.2rem -0.2rem 1rem 0.01rem rgba(2, 15, 38, 0.116),
