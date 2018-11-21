@@ -1,23 +1,55 @@
-const fetchCurry = (...paths) => (options, method, body) => {
-  const url = `/api/v1` + paths.join('');
-  const load = options || {
-    method,
-    body: JSON.stringify(body),
-    headers: { 'Content-Type': 'application/json' }
-  }
-  return fetch(url, load)
+const fetchCall = ({ path, options }) => {
+  const url = `/api/v1` + path;
+  return fetch(url, options)
     .then(response => response.json())
     .then(data => data)
     .catch(error => console.log(error));
 }
 
-const getColor = (id) => fetchCurry(`/colors/${id}`)({});
-const getAllProjects = () => fetchCurry('/projects')({});
-const getProjectPalettes = (id) => fetchCurry(`/${id}/palettes`)({});
+const options = ({ method, body }) => ({
+  method,
+  body: JSON.stringify(body),
+  headers: { 'Content-Type': 'application/json' }
+});
 
-const addColor = (shape, hex) => fetchCurry(`/colors`)(false, 'POST', {shape, hex});
-const addProject = (name) => fetchCurry(`/projects`)(false, 'POST', {name});
-const addPalette = (id, palette) => fetchCurry(`/${id}/palettes`)(false, 'POST', {...palette});
+const getColor = (id) => fetchCall({ path: `/colors/${id}` });
+const getAllProjects = () => fetchCall({ path: '/projects' });
+const getProjectPalettes = (id) => fetchCall({ path: `/${id}/palettes` });
 
-const deletePalette = (id) => fetchCurry(`/palettes/${id}`)(false, 'DELETE');
-const deleteProject = (id) => fetchCurry(`/projects/${id}`)(false, 'DELETE');
+const addProject = (name) => fetchCall({ 
+  path: `/projects`,
+  options: options({
+    method: 'POST',
+    body: { name }
+  })
+});
+
+const addColor = (shape, hex) => fetchCall({ 
+  path: `/colors`,
+  options: options({
+    method: 'POST',
+    body: { shape, hex }
+  })
+});
+
+const addPalette = (id, palette) => fetchCall({ 
+  path: `/${id}/palettes`,
+  options: options({
+    method: 'POST',
+    body: { ...palette }
+  })
+});
+
+const deletePalette = (id) => fetchCall({ 
+  path: `/palettes/${id}`,
+  options: options({
+    method: 'DELETE'
+  })
+});
+
+const deleteProject = (id) => fetchCall({ 
+  path: `/projects/${id}`,
+  options: options({
+    method: 'DELETE'
+  })
+});
