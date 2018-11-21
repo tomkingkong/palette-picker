@@ -22,6 +22,7 @@ button {
 .HEADER { 
   display: flex;
   justify-content: center;
+  background: #1f1f1f;
 }
 
 .TITLE {
@@ -62,7 +63,7 @@ button {
   min-width: 8rem;
   width: 100%;
   max-width: calc(100% - 10rem);
-  margin: 0.5rem auto;
+  margin: 0.25rem auto;
   transition: all 0.25s ease-in;
   .RANDOM__PALETTE {
     display: flex;
@@ -85,7 +86,7 @@ button {
   border-radius: 0.5rem;
   min-width: 4rem;
   width: 10rem;
-  margin: 0.5rem auto;
+  margin: 0.25rem auto;
   transition: all 0.25s ease-in;
 }
 
@@ -256,28 +257,25 @@ button {
 /* PROJECTS SECTION */
 
 .PROJECTS {
-  border-top: 0.2rem solid goldenrod;
   min-height: 10rem;
-  margin: 0.5rem auto 0 auto;
+  margin: 0 auto;
 }
 
 .PROJECTS__HEADER {
+  background: #1f1f1f;
   display: flex;
-  justify-content: space-between;
   flex-wrap: wrap;
+  align-items: center;
   overflow: scroll;
   padding: 0 1rem;
-  min-height: 4rem;
-  min-width: fit-content;
+  height: 6rem;
   width: 100%;
-  max-width: 40rem;
   margin: 0;
   h4 {
-    align-self: center;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 120%;
-    color: #3e0ba5;
-    margin: 0.2rem;
+    font-size: 180%;
+    color: #efeafa;
+    margin: 0 0.5rem 0 0;
   }
   .PROJECTS__FORM {
     display: flex;
@@ -408,10 +406,11 @@ button {
 /* SAVED PROJECTS */
 
 .PROJECTS__CONTAINER {
-  border: 0.2rem solid forestgreen;
+  background: #1f1f1f;
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
+  min-height: 10rem;
   margin: 0.5rem 0 0 0;
 }
 
@@ -420,10 +419,14 @@ button {
 @media only screen and (max-width: 620px) {
   .RANDOM__PALETTE {
     div {
-      max-height: 5rem;
-      max-width: 5rem;  
-      min-height: 5rem;
-      min-width: 5rem;
+      min-height: 5.5rem;
+      min-width: 5.5rem;  
+    }
+    .COLOR > div { 
+      max-height: 4.5rem;
+      max-width: 4.5rem;  
+      min-height: 4.5rem;
+      min-width: 4.5rem;
     }
   }
 }
@@ -431,6 +434,10 @@ button {
 @media only screen and (max-width: 420px) {
   .RANDOM__PALETTE {
     div {
+      min-height: 4rem;
+      min-width: 4rem;  
+    }
+    .COLOR > div { 
       max-height: 3.5rem;
       max-width: 3.5rem;  
       min-height: 3.5rem;
@@ -449,6 +456,10 @@ button {
   }
   .RANDOM__PALETTE {
     div {
+      min-height: 2.5rem;
+      min-width: 2.5rem;  
+    }
+    .COLOR > div { 
       max-height: 2.5rem;
       max-width: 2.5rem;  
       min-height: 2.5rem;

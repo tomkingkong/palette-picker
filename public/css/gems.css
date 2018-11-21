@@ -1,23 +1,18 @@
-/* 
-  //Shout out to Joseph Silber, Alexander Futekov, 
-  //From https://css-tricks.com/examples/ShapesOfCSS/
-  //Providing all these lovely shapes
-*/
 .COLOR {
   cursor: pointer;
   border: 0.2rem solid transparent;
-  border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   min-width: 9.2rem;
   min-height: 9.2rem;
-  margin: 0.5rem; }
+  margin: 0.5rem;
+  padding: 1rem; }
 
 /* LOCK */
 .locked {
-  border: 0.2rem solid gold;
-  border-radius: 50%; }
+  background: #353535;
+  border-radius: 0.4rem; }
 
 .CUT_DIAMOND {
   min-width: 8rem;
