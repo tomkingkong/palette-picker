@@ -21,9 +21,7 @@ dropContent.addEventListener('click', selectProject);
 savedProjects.addEventListener('click', selectProject);
 saveProjectForm.addEventListener('submit', saveProject);
 randomPalette.addEventListener('click', lockColor);
-paletteGenerator.addEventListener('click', generatePalette);
-savePaletteBtn.addEventListener('click', saveColorPalette);
-gemsPalettes.addEventListener('click', insertGemsToBoard);
+gemsPalettes.addEventListener('click', displaySelectedPalette);
 
 async function populateProjects() {
   const projects = await getAllProjects();
@@ -180,16 +178,18 @@ function generateNewPalette() {
   });
 }
 
-function insertGemsToBoard(e) {
+function displaySelectedPalette(e) {
   const palette = e.target.querySelectorAll('div');
   const gems = [];
+
   palette.forEach(gem => {
-    if (gem.classList[0] !== 'trash') {
+    if (gem.classList[0] !== 'palette--trash') {
       let shape = gem.classList[1];
       let hex = gem.style.backgroundColor;
       gems.push({shape, hex});
     }
   })
+
   gems.forEach((gem, i) => {
     if (!colors[i].classList.contains('locked')) {
       colors[i].innerHTML = 
