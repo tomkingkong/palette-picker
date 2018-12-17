@@ -21,6 +21,8 @@ dropContent.addEventListener('click', selectProject);
 savedProjects.addEventListener('click', selectProject);
 saveProjectForm.addEventListener('submit', saveProject);
 randomPalette.addEventListener('click', lockColor);
+paletteGenerator.addEventListener('click', generateNewPalette);
+savePaletteBtn.addEventListener('click', saveGemPalette);
 gemsPalettes.addEventListener('click', displaySelectedPalette);
 
 async function populateProjects() {
@@ -44,7 +46,7 @@ function appendProjectLink(project) {
 
 async function saveProject(e) {
   e.preventDefault();
-  let name = projectInput.value;
+  let name = projectInput.value.toLowerCase();
   if (name !== '') {
     let projId = await addProject(name);
     if (projId.error) return projNameError();
@@ -60,37 +62,38 @@ function projNameError() {
   }, 2000);
 }
 
-function saveColorPalette() {
+function saveGemPalette() {
   const proj_id = parseInt(dropDown.id);
-  const projName = dropDown.innerText;
-  const name = paletteInput.value;
+  const projName = dropDown.innerText.toLowerCase();
+  const name = paletteInput.value.toLowerCase();
   const palette = { name };
   let gems = [];
-  
+
   async function retreiveGem(color, i) {
     const { className, id } = color.childNodes[0];
     const shape = className;
     const hex = id;
+
     gems.push({shape, hex});
-    let c = await addColor(shape, hex);
-    palette[`color${i+1}`] = c.id;
+    let gem = await addGem(shape, hex);
+    palette[`color${i+1}`] = gem.id;
   }
 
   async function appendPalette() {
-    let p = await addPalette(proj_id, palette);
-    const proj = document.getElementById(projName+proj_id);
-    proj.innerHTML += createPalette(name, gems, p.id);
-    currentPalettes.innerHTML += createPalette(name, gems, p.id);
+    const pal = await addPalette(proj_id, palette);
+    const proj = document.getElementById(`${projName}${proj_id}`);
+    proj.innerHTML += createPalette(name, gems, pal.id);
+    currentPalettes.innerHTML += createPalette(name, gems, pal.id);
     paletteInput.value = '';
   }
 
-  if (!name || !projName === 'Projects') {
+  if (!name || !projName === 'SELECT PROJECT') {
     paletteInput.value = 'INVALID! Try Again',
     setTimeout(() => {
-      paletteInput.value = ''
-      return
+      paletteInput.value = '';
+      return;
     }, 2000);
-    return
+    return;
   };
 
   colors.forEach((color, i) => retreiveGem(color, i));
@@ -109,11 +112,11 @@ async function spawnProject(project) {
 function createProject(project, palettes) {
   const { name, id } = project;
   return (
-    `<article class="PROJECT__SAVED">
-      <h5 class="title" id="${id}">
+    `<article class="project__saved">
+      <h5 class="project__saved--title" id="${id}">
         ${name}
       </h5>
-      <div id="${name+id}" class="PROJECT__PALETTES">
+      <div id="${name+id}" class="project__saved--palettes">
         ${palettes.join('')}
       </div>
     </article>`);
@@ -124,7 +127,7 @@ async function spawnPalettes(id) {
   const palettes = projPalettes.data.map(async palette => {
     const gems = [];
     for (let i=1; i<6; i++) {
-      const gem = await getColor(palette[`color`+i]);
+      const gem = await getGem(palette[`color`+i]);
       gems.push(gem.data[0]);
     }
      return createPalette(palette.name, gems, palette.id)
@@ -151,6 +154,7 @@ function createPalette(name, gems, id) {
 async function selectProject(e) {
   const { innerText, id } = e.target;
   if (!innerText || !id) return
+
   dropDown.innerText = innerText;
   dropDown.id = id;
   const palettes = await spawnPalettes(id);
@@ -207,9 +211,9 @@ function displaySelectedPalette(e) {
 
 function lockColor(e) {
   const { classList, parentNode } = e.target;
-  if(classList.contains('COLOR')) {
+  if(classList.contains('gem-color')) {
    classList.toggle('locked');
-  } else if(parentNode.classList.contains('COLOR')) {
+  } else if(parentNode.classList.contains('gem-color')) {
     parentNode.classList.toggle('locked');
   }
 }
@@ -219,8 +223,8 @@ function toggleDrop() {
 }
 
 function handleDropDown(event) {
-  if (!event.target.matches('.drop_btn')) {
-    const dropdowns = document.getElementsByClassName('dropdown-content');
+  if (!event.target.matches('.selected__dropdown--drop_btn')) {
+    const dropdowns = document.getElementsByClassName('selected__dropdown--content');
     for (let i = 0; i < dropdowns.length; i++) {
       let openDropdown = dropdowns[i];
       if (openDropdown.classList.contains('show')) {
