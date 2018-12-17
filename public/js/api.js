@@ -12,7 +12,7 @@ const options = ({ method, body }) => ({
   headers: { 'Content-Type': 'application/json' }
 });
 
-const getColor = (id) => fetchCall({ path: `/colors/${id}` });
+const getGem = (id) => fetchCall({ path: `/colors/${id}` });
 const getAllProjects = () => fetchCall({ path: '/projects' });
 const getProjectPalettes = (id) => fetchCall({ path: `/${id}/palettes` });
 
@@ -24,7 +24,7 @@ const addProject = (name) => fetchCall({
   })
 });
 
-const addColor = (shape, hex) => fetchCall({ 
+const addGem = (shape, hex) => fetchCall({ 
   path: `/colors`,
   options: options({
     method: 'POST',
