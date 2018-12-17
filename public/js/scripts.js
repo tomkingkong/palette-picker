@@ -47,10 +47,11 @@ function appendProjectLink(project) {
 async function saveProject(e) {
   e.preventDefault();
   let name = projectInput.value.toLowerCase();
+
   if (name !== '') {
-    let projId = await addProject(name);
-    if (projId.error) return projNameError();
-    await spawnProject({id: projId, name, new:true});
+    let proj = await addProject(name);
+    if (proj.error) return projNameError();
+    await spawnProject({id: proj.id, name, new:true});
   }
   projectInput.value = '';
 }
@@ -153,7 +154,7 @@ function createPalette(name, gems, id) {
 
 async function selectProject(e) {
   const { innerText, id } = e.target;
-  if (!innerText || !id) return
+  if (!innerText || !id) return;
 
   dropDown.innerText = innerText;
   dropDown.id = id;
