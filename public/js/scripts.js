@@ -158,10 +158,9 @@ async function selectProject(e) {
 }
 
 function deleteProjectPalette(event) {
-  const { id } = event.target.parentNode.parentNode;
-  deletePalette(id);
-  const palette = document.getElementById(id)
-  palette.parentNode.removeChild(palette);
+function removeFromPage(name, id) {
+  const elemToDelete = document.querySelectorAll(`.${name}${id}`);
+  elemToDelete.forEach(node => node.parentNode.removeChild(node));
 }
 
 function generateNewPalette() {
