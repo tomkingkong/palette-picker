@@ -1,4 +1,4 @@
-.COLOR {
+.gem-color {
   cursor: pointer;
   border: 0.2rem solid transparent;
   display: flex;
@@ -11,7 +11,7 @@
 
 /* LOCK */
 .locked {
-  background: #353535;
+  background: #31312A;
   border-radius: 0.4rem; }
 
 .CUT_DIAMOND {
