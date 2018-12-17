@@ -12,7 +12,7 @@ const projectInput = document.querySelector('.projects__form--input');
 const gemsPalettes = document.querySelector('.selected__palettes');
 
 window.addEventListener('load', function() {
-  generatePalette();
+  generateNewPalette();
   populateProjects();
 });
 window.addEventListener('click', handleDropDown);
@@ -166,10 +166,11 @@ function deleteProjectPalette(event) {
   palette.parentNode.removeChild(palette);
 }
 
-function generatePalette() {
+function generateNewPalette() {
   colors.forEach(color => {
     if (!color.classList.contains('locked')) {
       const gem = new Gem();
+
       color.innerHTML = 
         `<div 
           id="${gem.color}" 
