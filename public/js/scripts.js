@@ -1,15 +1,15 @@
-const dropDown = document.querySelector('.drop_btn');
-const dropContent = document.querySelector('.dropdown-content');
-const paletteGenerator = document.querySelector('.GENERATOR');
-const randomPalette = document.querySelector('.RANDOM__PALETTE');
-const colors = document.querySelectorAll('.COLOR');
-const savePaletteBtn = document.querySelector('.SAVE__PALETTE');
-const saveProjectForm = document.querySelector('.PROJECTS__FORM');
-const projectInput = document.querySelector('.PROJ__INPUT');
-const paletteInput = document.querySelector('.PALETTE__INPUT');
-const savedProjects = document.querySelector('.PROJECTS__CONTAINER');
-const currentPalettes = document.querySelector('ul');
-const gemsPalettes = document.querySelector('.PROJECT__PALETTES');
+const dropDown = document.querySelector('.selected__dropdown--drop_btn');
+const dropContent = document.querySelector('.selected__dropdown--content');
+const paletteGenerator = document.querySelector('.jewel-generator');
+const randomPalette = document.querySelector('.game__board--palette');
+const colors = document.querySelectorAll('.gem-color');
+const currentPalettes = document.querySelector('.selected__palettes');
+const savePaletteBtn = document.querySelector('.save-palette__textbox');
+const paletteInput = document.querySelector('.save-palette__input');
+const savedProjects = document.querySelector('.projects__container');
+const saveProjectForm = document.querySelector('.projects__form');
+const projectInput = document.querySelector('.projects__form--input');
+const gemsPalettes = document.querySelector('.selected__palettes');
 
 window.addEventListener('load', function() {
   generatePalette();
