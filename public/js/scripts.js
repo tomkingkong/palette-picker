@@ -1,18 +1,18 @@
-const dropDown = document.querySelector('.drop_btn');
-const dropContent = document.querySelector('.dropdown-content');
-const paletteGenerator = document.querySelector('.GENERATOR');
-const randomPalette = document.querySelector('.RANDOM__PALETTE');
-const colors = document.querySelectorAll('.COLOR');
-const savePaletteBtn = document.querySelector('.SAVE__PALETTE');
-const saveProjectForm = document.querySelector('.PROJECTS__FORM');
-const projectInput = document.querySelector('.PROJ__INPUT');
-const paletteInput = document.querySelector('.PALETTE__INPUT');
-const savedProjects = document.querySelector('.PROJECTS__CONTAINER');
-const currentPalettes = document.querySelector('ul');
-const gemsPalettes = document.querySelector('.PROJECT__PALETTES');
+const dropDown = document.querySelector('.selected__dropdown--drop_btn');
+const dropContent = document.querySelector('.selected__dropdown--content');
+const paletteGenerator = document.querySelector('.jewel-generator');
+const randomPalette = document.querySelector('.game__board--palette');
+const colors = document.querySelectorAll('.gem-color');
+const currentPalettes = document.querySelector('.selected__palettes');
+const savePaletteBtn = document.querySelector('.save-palette__textbox');
+const paletteInput = document.querySelector('.save-palette__input');
+const savedProjects = document.querySelector('.projects__container');
+const saveProjectForm = document.querySelector('.projects__form');
+const projectInput = document.querySelector('.projects__form--input');
+const gemsPalettes = document.querySelector('.selected__palettes');
 
 window.addEventListener('load', function() {
-  generatePalette();
+  generateNewPalette();
   populateProjects();
 });
 window.addEventListener('click', handleDropDown);
@@ -21,9 +21,9 @@ dropContent.addEventListener('click', selectProject);
 savedProjects.addEventListener('click', selectProject);
 saveProjectForm.addEventListener('submit', saveProject);
 randomPalette.addEventListener('click', lockColor);
-paletteGenerator.addEventListener('click', generatePalette);
-savePaletteBtn.addEventListener('click', saveColorPalette);
-gemsPalettes.addEventListener('click', insertGemsToBoard);
+paletteGenerator.addEventListener('click', generateNewPalette);
+savePaletteBtn.addEventListener('click', saveGemPalette);
+gemsPalettes.addEventListener('click', displaySelectedPalette);
 
 async function populateProjects() {
   const projects = await getAllProjects();
@@ -46,11 +46,12 @@ function appendProjectLink(project) {
 
 async function saveProject(e) {
   e.preventDefault();
-  let name = projectInput.value;
+  let name = projectInput.value.toLowerCase();
+
   if (name !== '') {
-    let projId = await addProject(name);
-    if (projId.error) return projNameError();
-    await spawnProject({id: projId, name, new:true});
+    let proj = await addProject(name);
+    if (proj.error) return projNameError();
+    await spawnProject({id: proj.id, name, new:true});
   }
   projectInput.value = '';
 }
@@ -62,37 +63,38 @@ function projNameError() {
   }, 2000);
 }
 
-function saveColorPalette() {
+function saveGemPalette() {
   const proj_id = parseInt(dropDown.id);
-  const projName = dropDown.innerText;
-  const name = paletteInput.value;
+  const projName = dropDown.innerText.toLowerCase();
+  const name = paletteInput.value.toLowerCase();
   const palette = { name };
   let gems = [];
-  
+
   async function retreiveGem(color, i) {
     const { className, id } = color.childNodes[0];
     const shape = className;
     const hex = id;
+
     gems.push({shape, hex});
-    let c = await addColor(shape, hex);
-    palette[`color${i+1}`] = c.id;
+    let gem = await addGem(shape, hex);
+    palette[`color${i+1}`] = gem.id;
   }
 
   async function appendPalette() {
-    let p = await addPalette(proj_id, palette);
-    const proj = document.getElementById(projName+proj_id);
-    proj.innerHTML += createPalette(name, gems, p.id);
-    currentPalettes.innerHTML += createPalette(name, gems, p.id);
+    const pal = await addPalette(proj_id, palette);
+    const proj = document.getElementById(`${projName}${proj_id}`);
+    proj.innerHTML += createPalette(name, gems, pal.id);
+    currentPalettes.innerHTML += createPalette(name, gems, pal.id);
     paletteInput.value = '';
   }
 
-  if (!name || !projName === 'Projects') {
+  if (!name || !projName === 'SELECT PROJECT') {
     paletteInput.value = 'INVALID! Try Again',
     setTimeout(() => {
-      paletteInput.value = ''
-      return
+      paletteInput.value = '';
+      return;
     }, 2000);
-    return
+    return;
   };
 
   colors.forEach((color, i) => retreiveGem(color, i));
@@ -111,11 +113,11 @@ async function spawnProject(project) {
 function createProject(project, palettes) {
   const { name, id } = project;
   return (
-    `<article class="PROJECT__SAVED">
-      <h5 class="title" id="${id}">
+    `<article class="project__saved">
+      <h5 class="project__saved--title" id="${id}">
         ${name}
       </h5>
-      <div id="${name+id}" class="PROJECT__PALETTES">
+      <div id="${name+id}" class="project__saved--palettes">
         ${palettes.join('')}
       </div>
     </article>`);
@@ -126,7 +128,7 @@ async function spawnPalettes(id) {
   const palettes = projPalettes.data.map(async palette => {
     const gems = [];
     for (let i=1; i<6; i++) {
-      const gem = await getColor(palette[`color`+i]);
+      const gem = await getGem(palette[`color`+i]);
       gems.push(gem.data[0]);
     }
      return createPalette(palette.name, gems, palette.id)
@@ -136,15 +138,15 @@ async function spawnPalettes(id) {
 
 function createPalette(name, gems, id) {
   return (
-    `<article id="${id}" class="PALETTE">
-      <h5 class="name">${name}</h5>
-      <section class="gems">
-        <div class="saved ${gems[0].shape}" style="background-color:${gems[0].hex}"></div>
-        <div class="saved ${gems[1].shape}" style="background-color:${gems[1].hex}"></div>
-        <div class="saved ${gems[2].shape}" style="background-color:${gems[2].hex}"></div>
-        <div class="saved ${gems[3].shape}" style="background-color:${gems[3].hex}"></div>
-        <div class="saved ${gems[4].shape}" style="background-color:${gems[4].hex}"></div>
-        <div class="trash" onclick="deleteProjectPalette(event)">🗑</div>
+    `<article id="${id}" data-name="${name}" class="palette ${name}${id}">
+      <h5 class="palette--name">${name}</h5>
+      <section class="palette--gems">
+        <div class="palette--saved ${gems[0].shape}" style="background-color:${gems[0].hex}"></div>
+        <div class="palette--saved ${gems[1].shape}" style="background-color:${gems[1].hex}"></div>
+        <div class="palette--saved ${gems[2].shape}" style="background-color:${gems[2].hex}"></div>
+        <div class="palette--saved ${gems[3].shape}" style="background-color:${gems[3].hex}"></div>
+        <div class="palette--saved ${gems[4].shape}" style="background-color:${gems[4].hex}"></div>
+        <div class="palette--trash" onclick="deleteProjectPalette(event)">🗑</div>
       </section>
     </article>
     `)
@@ -152,7 +154,8 @@ function createPalette(name, gems, id) {
 
 async function selectProject(e) {
   const { innerText, id } = e.target;
-  if (!innerText || !id) return
+  if (!innerText || !id) return;
+
   dropDown.innerText = innerText;
   dropDown.id = id;
   const palettes = await spawnPalettes(id);
@@ -160,16 +163,21 @@ async function selectProject(e) {
 }
 
 function deleteProjectPalette(event) {
-  const { id } = event.target.parentNode.parentNode;
-  deletePalette(id);
-  const palette = document.getElementById(id)
-  palette.parentNode.removeChild(palette);
+  const palNode = event.target.parentNode.parentNode;
+  deletePalette(palNode.id);
+  removeFromPage(palNode.dataset.name, palNode.id);
 }
 
-function generatePalette() {
+function removeFromPage(name, id) {
+  const elemToDelete = document.querySelectorAll(`.${name}${id}`);
+  elemToDelete.forEach(node => node.parentNode.removeChild(node));
+}
+
+function generateNewPalette() {
   colors.forEach(color => {
     if (!color.classList.contains('locked')) {
       const gem = new Gem();
+
       color.innerHTML = 
         `<div 
           id="${gem.color}" 
@@ -179,16 +187,18 @@ function generatePalette() {
   });
 }
 
-function insertGemsToBoard(e) {
+function displaySelectedPalette(e) {
   const palette = e.target.querySelectorAll('div');
   const gems = [];
+
   palette.forEach(gem => {
-    if (gem.classList[0] !== 'trash') {
+    if (gem.classList[0] !== 'palette--trash') {
       let shape = gem.classList[1];
       let hex = gem.style.backgroundColor;
       gems.push({shape, hex});
     }
   })
+
   gems.forEach((gem, i) => {
     if (!colors[i].classList.contains('locked')) {
       colors[i].innerHTML = 
@@ -202,9 +212,9 @@ function insertGemsToBoard(e) {
 
 function lockColor(e) {
   const { classList, parentNode } = e.target;
-  if(classList.contains('COLOR')) {
+  if(classList.contains('gem-color')) {
    classList.toggle('locked');
-  } else if(parentNode.classList.contains('COLOR')) {
+  } else if(parentNode.classList.contains('gem-color')) {
     parentNode.classList.toggle('locked');
   }
 }
@@ -214,8 +224,8 @@ function toggleDrop() {
 }
 
 function handleDropDown(event) {
-  if (!event.target.matches('.drop_btn')) {
-    const dropdowns = document.getElementsByClassName('dropdown-content');
+  if (!event.target.matches('.selected__dropdown--drop_btn')) {
+    const dropdowns = document.getElementsByClassName('selected__dropdown--content');
     for (let i = 0; i < dropdowns.length; i++) {
       let openDropdown = dropdowns[i];
       if (openDropdown.classList.contains('show')) {

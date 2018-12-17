@@ -4,58 +4,80 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Jewel Pickr</title>
+    <title>Jewel Pickr 💎</title>
     <link rel="stylesheet" type="text/css" href="./css/gems.css" />
     <link rel="stylesheet" type="text/css" href="./css/styles.css" />
   </head>
   <body>
-    <header class="HEADER">
-      <h1 class="TITLE">Jewel Pickr</h1>
-    </header>
-    <main class="PICKER">
-      <section class="BOARD">
-        <div class="RANDOM__PALETTE">
-          <div class="COLOR"></div>
-          <div class="COLOR"></div>
-          <div class="COLOR"></div>
-          <div class="COLOR"></div>
-          <div class="COLOR"></div>
+
+    <main class="game">
+      <section class="game__board">
+        <div class="game__board--palette">
+          <div class="gem-color"></div>
+          <div class="gem-color"></div>
+          <div class="gem-color"></div>
+          <div class="gem-color"></div>
+          <div class="gem-color"></div>
         </div>
       </section>
-      <main class="GEN__PALETTE">
-        <section class="CURRENT">
-          <div class="dropdown">
-            <button data-end="▼" class="drop_btn">
-              Projects
-            </button>
-            <div id="project-dropdown" class="dropdown-content"></div>
+
+      <div class="tool-bar">
+        
+        <header class="header">
+          <svg class="header-title-svg" viewBox='0 0 100 100'>
+            <path id="curve" d='M-12,30C40,25 70,25 115,30'/>
+            <text>
+              <textPath class="header-title" xlink:href="#curve">
+                JEWEL PICKR
+              </textPath>
+            </text>
+          </svg>
+    
+          <svg style="width:0;height:0;position:absolute;" aria-hidden="true" focusable="false">
+            <linearGradient id="titleGradient" gradientTransform="rotate(90)">
+              <stop offset="0%"   stop-color="#e66465" />
+              <stop offset="90%" stop-color="#9198e5" />
+            </linearGradient>
+          </svg>
+        </header>
+
+        <section class="selected">
+          <div class="selected__dropdown">
+            <button class="selected__dropdown--drop_btn">SELECT PROJECT<br>▼</button>
+            <div id="project-dropdown" class="selected__dropdown--content"></div>
           </div>
-          <ul class="PROJECT__PALETTES">
-          </ul>
+
+          <ul class="selected__palettes"></ul>
         </section>
-        <div class="GEN__BUTTONS">
-          <div class="GENERATOR">
-            <p>Generate</p>
-            <p>New</p>
-            <p>Jewels</p>
-          </div>
-          <input class="PALETTE__INPUT" type="text" placeholder="Add new palette..." required/>
-          <div class="SAVE__PALETTE">
-            <p>SAVE palette</p>
-          </div>
+
+        <button class="jewel-generator">
+          <p class="jewel-generator--text">NEW<br>JEWELS</p>
+        </button>
+
+        <div class="save-palette">
+          <input class="save-palette__input" type="text" placeholder="New palette name" required/>
+          
+          <button class="save-palette__textbox">
+            <p class="save-palette__textbox--text">SAVE PALETTE</p>
+          </button>
         </div>
-      </main>
+
+      </div>
     </main>
-    <section class="PROJECTS">
-      <div class="PROJECTS__HEADER">
-        <h4>PROJECTS</h4>
-        <form class="PROJECTS__FORM">
-          <input class="PROJ__INPUT" type="text" placeholder="Add new project..." required/>
-          <input class="ADD__BTN" type="submit" value="+"/>
+
+    <section class="projects">
+      <div class="projects__header">
+        <h4 class="projects__header--title">PROJECTS</h4>
+
+        <form class="projects__form">
+          <input class="projects__form--input" type="text" placeholder="Add new project..." required/>
+          <input class="projects__form--btn--add" type="submit" value="+"/>
         </form>
       </div>
-      <section class="PROJECTS__CONTAINER" />
+
+      <section class="projects__container"></section>
     </section>
+
   </body>
   <script src="./js/api.js"></script>
   <script src="./js/classes.js"></script>
