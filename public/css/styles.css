@@ -51,7 +51,7 @@ body {
   .game__board {
     order: 1;
     border: 0.5rem ridge gold;
-    background: #505039;
+    background: #31312A;
     display: flex;
     justify-content: center;
     align-items: center;
