@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build-css": "node-sass-chokidar public/ -o public/",
-    "watch-css": "npm run build-css && node-sass-chokidar public/ -o public/ --watch --recursive",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "watch-css": "npm run build-css && node-sass-chokidar public/ -o public/ --watch --recursive"
   },
   "keywords": [],
   "author": "",
