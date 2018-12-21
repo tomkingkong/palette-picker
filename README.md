@@ -1,7 +1,10 @@
 ## Jewel Pickr
 
 ### A place to pick your favorite jewels
-#### Bejeweled inspired project to practice creating a functional backend with NodeJS/Express.  
+## Inspired by the game Bejeweled.
+
+## Tech Stack
+NodeJS / Express / SASS / PostgreSQL
 
 Deployed to HerokuApp. 
 
