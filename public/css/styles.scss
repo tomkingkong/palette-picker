@@ -34,26 +34,28 @@ body {
   font-size: 20px;
 }
 
+/** TITLE **/
+
 .header { 
   display: flex;
   position: relative;
   height: 4rem;
-  &-title-svg {
-    margin: 1rem 0;
-    width: 100%;
-    height: 8rem;
-    path {
-      fill: transparent;
-    }
-    text {
-      fill: url(#titleGradient) #e66465;
-      stroke: #F243D6;
-    }
-  }
   &-title {
     cursor: default;
     font-family: 'busorama', 'serif';
+    font-weight: 500;
     font-size: 1.5rem;
+    &-svg {
+    margin: 1rem 0;
+    width: 100%;
+    height: 8rem;
+      path { fill: transparent; }
+    text {
+        fill: url(#titleGradient) rgb(230, 100, 101);
+        stroke: rgba(150, 49, 131, 0.8);
+        stroke-width: 0.025rem;
+    }
+  }
   }
 }
 
